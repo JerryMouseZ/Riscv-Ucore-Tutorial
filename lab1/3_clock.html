@@ -1,0 +1,1216 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>滴答滴答(时钟中断) · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="structure.html" />
+    
+    
+    <link rel="prev" href="2_trap.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    欢迎来到ucore step-by-step的世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../lab0/intro.html">
+            
+                <a href="../lab0/intro.html">
+            
+                    
+                    lab0: 预备起
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../lab0/1_history.html">
+            
+                <a href="../lab0/1_history.html">
+            
+                    
+                    溯源: ucore的历史
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../lab0/2_overview.html">
+            
+                <a href="../lab0/2_overview.html">
+            
+                    
+                    概览: 指导书的结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../lab0/3_startdash.html">
+            
+                <a href="../lab0/3_startdash.html">
+            
+                    
+                    开搞: 实验环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../lab0.5/intro.html">
+            
+                <a href="../lab0.5/intro.html">
+            
+                    
+                    lab0.5: 比麻雀更小的麻雀(最小可执行内核)
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../lab0.5/1_layout.html">
+            
+                <a href="../lab0.5/1_layout.html">
+            
+                    
+                    内存布局，OpenSBI，elf和bin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../lab0.5/2_linkerscript.html">
+            
+                <a href="../lab0.5/2_linkerscript.html">
+            
+                    
+                    链接脚本和入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../lab0.5/3_kern_init.html">
+            
+                <a href="../lab0.5/3_kern_init.html">
+            
+                    
+                    "真正的"入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../lab0.5/4_sbi_io.html">
+            
+                <a href="../lab0.5/4_sbi_io.html">
+            
+                    
+                    从SBI到stdio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../lab0.5/5_makeit.html">
+            
+                <a href="../lab0.5/5_makeit.html">
+            
+                    
+                    Just make it
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../lab0.5/structure.html">
+            
+                <a href="../lab0.5/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="intro.html">
+            
+                <a href="intro.html">
+            
+                    
+                    lab1: 断, 都可以断
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="1_trapentry.html">
+            
+                <a href="1_trapentry.html">
+            
+                    
+                    掉进兔子洞(中断入口点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="2_trap.html">
+            
+                <a href="2_trap.html">
+            
+                    
+                    中断处理程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.3" data-path="3_clock.html">
+            
+                <a href="3_clock.html">
+            
+                    
+                    滴答滴答(时钟中断)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="structure.html">
+            
+                <a href="structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../lab2/intro.html">
+            
+                <a href="../lab2/intro.html">
+            
+                    
+                    lab2: 物理内存和页表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../lab2/1_init.html">
+            
+                <a href="../lab2/1_init.html">
+            
+                    
+                    内核初始映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../lab2/2_physical.html">
+            
+                <a href="../lab2/2_physical.html">
+            
+                    
+                    物理内存管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../lab2/3_alloc.html">
+            
+                <a href="../lab2/3_alloc.html">
+            
+                    
+                    页面分配算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../lab2/structure.html">
+            
+                <a href="../lab2/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../lab3/intro.html">
+            
+                <a href="../lab3/intro.html">
+            
+                    
+                    lab3: 缺页异常和页面置换
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../lab3/1_pagefault.html">
+            
+                <a href="../lab3/1_pagefault.html">
+            
+                    
+                    扫清外围
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../lab3/2_pagetable.html">
+            
+                <a href="../lab3/2_pagetable.html">
+            
+                    
+                    使用多级页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../lab3/3_swap.html">
+            
+                <a href="../lab3/3_swap.html">
+            
+                    
+                    页面置换机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../lab3/4_fifo.html">
+            
+                <a href="../lab3/4_fifo.html">
+            
+                    
+                    FIFO置换算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../lab3/structure.html">
+            
+                <a href="../lab3/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../lab4/intro.html">
+            
+                <a href="../lab4/intro.html">
+            
+                    
+                    lab4: 进程管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../lab4/1_process.html">
+            
+                <a href="../lab4/1_process.html">
+            
+                    
+                    进程与线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../lab4/2_struct.html">
+            
+                <a href="../lab4/2_struct.html">
+            
+                    
+                    相关数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../lab4/3_init.html">
+            
+                <a href="../lab4/3_init.html">
+            
+                    
+                    进程模块初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../lab4/4_switch.html">
+            
+                <a href="../lab4/4_switch.html">
+            
+                    
+                    进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../lab4/structure.html">
+            
+                <a href="../lab4/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../lab5/intro.html">
+            
+                <a href="../lab5/intro.html">
+            
+                    
+                    lab5: 用户程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../lab5/1_user.html">
+            
+                <a href="../lab5/1_user.html">
+            
+                    
+                    用户程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../lab5/2_syscall.html">
+            
+                <a href="../lab5/2_syscall.html">
+            
+                    
+                    system call!
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../lab5/3_trap.html">
+            
+                <a href="../lab5/3_trap.html">
+            
+                    
+                    中断处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../lab5/structure.html">
+            
+                <a href="../lab5/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../lab6/intro.html">
+            
+                <a href="../lab6/intro.html">
+            
+                    
+                    lab6: 进程调度
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../lab6/1_switch.html">
+            
+                <a href="../lab6/1_switch.html">
+            
+                    
+                    再次认识进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../lab6/2_schedule.html">
+            
+                <a href="../lab6/2_schedule.html">
+            
+                    
+                    调度算法框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../lab6/structure.html">
+            
+                <a href="../lab6/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../lab7/intro.html">
+            
+                <a href="../lab7/intro.html">
+            
+                    
+                    lab7: 同步互斥
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../lab7/1_concept.html">
+            
+                <a href="../lab7/1_concept.html">
+            
+                    
+                    同步互斥的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../lab7/2_semaphore.html">
+            
+                <a href="../lab7/2_semaphore.html">
+            
+                    
+                    信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../lab7/3_monitor.html">
+            
+                <a href="../lab7/3_monitor.html">
+            
+                    
+                    条件变量与管程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../lab7/structure.html">
+            
+                <a href="../lab7/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../lab8/intro.html">
+            
+                <a href="../lab8/intro.html">
+            
+                    
+                    lab8: 文件系统
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../lab8/3_vfs.html">
+            
+                <a href="../lab8/3_vfs.html">
+            
+                    
+                    文件系统抽象层VFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../lab8/1_sfs.html">
+            
+                <a href="../lab8/1_sfs.html">
+            
+                    
+                    硬盘文件系统SFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../lab8/2_device.html">
+            
+                <a href="../lab8/2_device.html">
+            
+                    
+                    设备即文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../lab8/4_shell.html">
+            
+                <a href="../lab8/4_shell.html">
+            
+                    
+                    从zhong duan 到 zhong duan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../lab8/structure.html">
+            
+                <a href="../lab8/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../excercise/intro.html">
+            
+                <a href="../excercise/intro.html">
+            
+                    
+                    练习题
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../excercise/1_lab1.html">
+            
+                <a href="../excercise/1_lab1.html">
+            
+                    
+                    lab1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../excercise/2_lab2.html">
+            
+                <a href="../excercise/2_lab2.html">
+            
+                    
+                    lab2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../excercise/3_lab3.html">
+            
+                <a href="../excercise/3_lab3.html">
+            
+                    
+                    lab3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../excercise/4_lab4.html">
+            
+                <a href="../excercise/4_lab4.html">
+            
+                    
+                    lab4
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../excercise/5_lab5.html">
+            
+                <a href="../excercise/5_lab5.html">
+            
+                    
+                    lab5
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.6" data-path="../excercise/6_lab6.html">
+            
+                <a href="../excercise/6_lab6.html">
+            
+                    
+                    lab6
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.7" data-path="../excercise/7_lab7.html">
+            
+                <a href="../excercise/7_lab7.html">
+            
+                    
+                    lab7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.8" data-path="../excercise/8_lab8.html">
+            
+                <a href="../excercise/8_lab8.html">
+            
+                    
+                    lab8
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../appendix/intro.html">
+            
+                <a href="../appendix/intro.html">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../appendix/1_makefile.html">
+            
+                <a href="../appendix/1_makefile.html">
+            
+                    
+                    makefile
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >滴答滴答(时钟中断)</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="lab1-3n-&#x6EF4;&#x7B54;&#x6EF4;&#x7B54;&#xFF08;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF09;">lab1 3/n &#x6EF4;&#x7B54;&#x6EF4;&#x7B54;&#xFF08;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF09;</h1>
+<p>&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x9700;&#x8981;CPU&#x786C;&#x4EF6;&#x7684;&#x652F;&#x6301;&#x3002;CPU&#x4EE5;&quot;&#x65F6;&#x949F;&#x5468;&#x671F;&quot;&#x4E3A;&#x5DE5;&#x4F5C;&#x7684;&#x57FA;&#x672C;&#x65F6;&#x95F4;&#x5355;&#x4F4D;&#xFF0C;&#x5BF9;&#x903B;&#x8F91;&#x95E8;&#x7684;&#x65F6;&#x5E8F;&#x7535;&#x8DEF;&#x8FDB;&#x884C;&#x540C;&#x6B65;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x7684;&#x201C;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x201D;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x201D;&#x6BCF;&#x9694;&#x82E5;&#x5E72;&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x7684;&#x7A0B;&#x5E8F;&#x201C;&#x3002;</p>
+<p>&#x201D;&#x82E5;&#x5E72;&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x201C;&#x662F;&#x591A;&#x5C11;&#x4E2A;&#xFF1F;&#x592A;&#x77ED;&#x4E86;&#x80AF;&#x5B9A;&#x4E0D;&#x884C;&#x3002;&#x5982;&#x679C;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x9700;&#x8981;100&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x6267;&#x884C;&#xFF0C;&#x800C;&#x4F60;&#x6BCF;50&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x5C31;&#x89E6;&#x53D1;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x90A3;&#x4E48;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#x8FDE;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x7A0B;&#x5E8F;&#x90FD;&#x8DD1;&#x4E0D;&#x5B8C;&#x3002;&#x5982;&#x679C;&#x4F60;200&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x5C31;&#x89E6;&#x53D1;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x90A3;&#x4E48;CPU&#x7684;&#x65F6;&#x95F4;&#x5C06;&#x6709;&#x4E00;&#x534A;&#x6D88;&#x8017;&#x5728;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x5F00;&#x9500;&#x592A;&#x5927;&#x3002;&#x4E00;&#x822C;&#x800C;&#x8A00;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x95F4;&#x9694;&#x8BBE;&#x7F6E;&#x4E3A;CPU&#x9891;&#x7387;&#x7684;1%&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6BCF;&#x79D2;&#x949F;&#x89E6;&#x53D1;100&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x907F;&#x514D;&#x5F00;&#x9500;&#x8FC7;&#x5927;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x7528;&#x5230;&#x7684;RISCV&#x5BF9;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x7684;&#x786C;&#x4EF6;&#x652F;&#x6301;&#x5305;&#x62EC;&#xFF1A;</p>
+<ul>
+<li>OpenSBI&#x63D0;&#x4F9B;&#x7684;<code>sbi_set_timer()</code>&#x63A5;&#x53E3;&#xFF0C;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x65F6;&#x523B;&#xFF0C;&#x8BA9;&#x5B83;&#x5728;&#x90A3;&#x4E2A;&#x65F6;&#x523B;&#x89E6;&#x53D1;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</li>
+<li><code>rdtime</code>&#x4F2A;&#x6307;&#x4EE4;&#xFF0C;&#x8BFB;&#x53D6;&#x4E00;&#x4E2A;&#x53EB;&#x505A;<code>time</code>&#x7684;CSR&#x7684;&#x6570;&#x503C;&#xFF0C;&#x8868;&#x793A;CPU&#x542F;&#x52A8;&#x4E4B;&#x540E;&#x7ECF;&#x8FC7;&#x7684;&#x771F;&#x5B9E;&#x65F6;&#x95F4;&#x3002;&#x5728;&#x4E0D;&#x540C;&#x786C;&#x4EF6;&#x5E73;&#x53F0;&#xFF0C;&#x65F6;&#x949F;&#x9891;&#x7387;&#x53EF;&#x80FD;&#x4E0D;&#x540C;&#x3002;&#x5728;QEMU&#x4E0A;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x949F;&#x7684;&#x9891;&#x7387;&#x662F;10MHz, &#x6BCF;&#x8FC7;1s, <code>rdtime</code>&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x589E;&#x5927;<code>10000000</code></li>
+</ul>
+<blockquote>
+<p>&#x8DA3;&#x95FB; </p>
+<p>&#x5728;RISCV32&#x548C;RISCV64&#x67B6;&#x6784;&#x4E2D;&#xFF0C;<code>time</code>&#x5BC4;&#x5B58;&#x5668;&#x90FD;&#x662F;64&#x4F4D;&#x7684;&#x3002;</p>
+<p><code>rdcycle</code>&#x4F2A;&#x6307;&#x4EE4;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x7ECF;&#x8FC7;&#x7684;&#x65F6;&#x949F;&#x5468;&#x671F;&#x6570;&#x76EE;&#xFF0C;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x5BC4;&#x5B58;&#x5668;<code>cycle</code></p>
+</blockquote>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x201C;&#x6BCF;&#x9694;&#x82E5;&#x5E72;&#x65F6;&#x95F4;&#x5C31;&#x53D1;&#x751F;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x201D;&#xFF0C;&#x4F46;&#x662F;OpenSBI&#x63D0;&#x4F9B;&#x7684;&#x63A5;&#x53E3;&#x4E00;&#x6B21;&#x53EA;&#x80FD;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x4E8B;&#x4EF6;&#x3002;&#x6211;&#x4EEC;&#x91C7;&#x7528;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#xFF1A;&#x4E00;&#x5F00;&#x59CB;&#x53EA;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x4E4B;&#x540E;&#x6BCF;&#x6B21;&#x53D1;&#x751F;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BBE;&#x7F6E;&#x4E0B;&#x4E00;&#x6B21;&#x7684;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x3002;</p>
+<p>&#x5728;clock.c&#x91CC;&#x9762;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x949F;&#x5E76;&#x5C01;&#x88C5;&#x4E00;&#x4E9B;&#x63A5;&#x53E3;</p>
+<pre><code class="lang-c"><span class="hljs-comment">//libs/sbi.c</span>
+
+<span class="hljs-comment">//&#x5F53;time&#x5BC4;&#x5B58;&#x5668;(rdtime&#x7684;&#x8FD4;&#x56DE;&#x503C;)&#x4E3A;stime_value&#x7684;&#x65F6;&#x5019;&#x89E6;&#x53D1;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sbi_set_timer</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> stime_value)</span> </span>{
+    sbi_call(SBI_SET_TIMER, stime_value, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+}
+
+<span class="hljs-comment">// kern/driver/clock.c</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;clock.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;defs.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sbi.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;riscv.h&gt;</span></span>
+
+<span class="hljs-comment">//volatile&#x544A;&#x8BC9;&#x7F16;&#x8BD1;&#x5668;&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#x53EF;&#x80FD;&#x5728;&#x5176;&#x4ED6;&#x5730;&#x65B9;&#x88AB;&#x778E;&#x6539;&#x4E00;&#x901A;&#xFF0C;&#x6240;&#x4EE5;&#x7F16;&#x8BD1;&#x5668;&#x4E0D;&#x8981;&#x5BF9;&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#x778E;&#x4F18;&#x5316;</span>
+<span class="hljs-keyword">volatile</span> <span class="hljs-keyword">size_t</span> ticks;
+
+<span class="hljs-comment">//&#x5BF9;64&#x4F4D;&#x548C;32&#x4F4D;&#x67B6;&#x6784;&#xFF0C;&#x8BFB;&#x53D6;time&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x4E0D;&#x540C;&#x7684;</span>
+<span class="hljs-comment">//32&#x4F4D;&#x67B6;&#x6784;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x628A;64&#x4F4D;&#x7684;time&#x5BC4;&#x5B58;&#x5668;&#x8BFB;&#x5230;&#x4E24;&#x4E2A;32&#x4F4D;&#x6574;&#x6570;&#x91CC;&#xFF0C;&#x7136;&#x540E;&#x62FC;&#x8D77;&#x6765;&#x5F62;&#x6210;&#x4E00;&#x4E2A;64&#x4F4D;&#x6574;&#x6570;</span>
+<span class="hljs-comment">//64&#x4F4D;&#x67B6;&#x6784;&#x7B80;&#x5355;&#x7684;&#x4E00;&#x53E5;rdtime&#x5C31;&#x53EF;&#x4EE5;&#x4E86;</span>
+<span class="hljs-comment">//__riscv_xlen&#x662F;gcc&#x5B9A;&#x4E49;&#x7684;&#x4E00;&#x4E2A;&#x5B8F;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x533A;&#x5206;&#x662F;32&#x4F4D;&#x8FD8;&#x662F;64&#x4F4D;&#x3002;</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> uint64_t <span class="hljs-title">get_time</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x65F6;&#x95F4;</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">if</span> __riscv_xlen == <span class="hljs-number">64</span></span>
+    <span class="hljs-keyword">uint64_t</span> n;
+    __asm__ __volatile__(<span class="hljs-string">&quot;rdtime %0&quot;</span> : <span class="hljs-string">&quot;=r&quot;</span>(n));
+    <span class="hljs-keyword">return</span> n;
+<span class="hljs-preprocessor">#<span class="hljs-keyword">else</span></span>
+    <span class="hljs-keyword">uint32_t</span> lo, hi, tmp;
+    __asm__ __volatile__(
+        <span class="hljs-string">&quot;1:\n&quot;</span>
+        <span class="hljs-string">&quot;rdtimeh %0\n&quot;</span>
+        <span class="hljs-string">&quot;rdtime %1\n&quot;</span>
+        <span class="hljs-string">&quot;rdtimeh %2\n&quot;</span>
+        <span class="hljs-string">&quot;bne %0, %2, 1b&quot;</span>
+        : <span class="hljs-string">&quot;=&amp;r&quot;</span>(hi), <span class="hljs-string">&quot;=&amp;r&quot;</span>(lo), <span class="hljs-string">&quot;=&amp;r&quot;</span>(tmp));
+    <span class="hljs-keyword">return</span> ((<span class="hljs-keyword">uint64_t</span>)hi &lt;&lt; <span class="hljs-number">32</span>) | lo;
+<span class="hljs-preprocessor">#<span class="hljs-keyword">endif</span></span>
+}
+
+
+<span class="hljs-comment">// Hardcode timebase</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">uint64_t</span> timebase = <span class="hljs-number">100000</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">clock_init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-comment">// sie&#x8FD9;&#x4E2A;CSR&#x53EF;&#x4EE5;&#x5355;&#x72EC;&#x4F7F;&#x80FD;/&#x7981;&#x7528;&#x67D0;&#x4E2A;&#x6765;&#x6E90;&#x7684;&#x4E2D;&#x65AD;&#x3002;&#x9ED8;&#x8BA4;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x662F;&#x5173;&#x95ED;&#x7684;</span>
+    <span class="hljs-comment">// &#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8981;&#x5728;&#x521D;&#x59CB;&#x5316;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F7F;&#x80FD;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</span>
+    set_csr(sie, MIP_STIP); <span class="hljs-comment">// enable timer interrupt in sie</span>
+    <span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x7B2C;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x4E8B;&#x4EF6;</span>
+    clock_set_next_event();
+    <span class="hljs-comment">// &#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x8BA1;&#x6570;&#x5668;</span>
+    ticks = <span class="hljs-number">0</span>;
+
+    cprintf(<span class="hljs-string">&quot;++ setup timer interrupts\n&quot;</span>);
+}
+<span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF1A;timer&#x7684;&#x6570;&#x503C;&#x53D8;&#x4E3A;&#x5F53;&#x524D;&#x65F6;&#x95F4; + timebase &#x540E;&#xFF0C;&#x89E6;&#x53D1;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</span>
+<span class="hljs-comment">//&#x5BF9;&#x4E8E;QEMU, timer&#x589E;&#x52A0;1&#xFF0C;&#x8FC7;&#x53BB;&#x4E86;10^-7 s&#xFF0C; &#x4E5F;&#x5C31;&#x662F;100ns</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">clock_set_next_event</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{ sbi_set_timer(get_time() + timebase); }
+</code></pre>
+<p>&#x56DE;&#x6765;&#x770B;trap.c&#x91CC;&#x9762;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7684;&#x4EE3;&#x7801;, &#x8FD8;&#x662F;&#x5F88;&#x7B80;&#x5355;&#x7684;&#xFF1A;&#x6BCF;&#x79D2;100&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x89E6;&#x53D1;&#x6BCF;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x540E;&#x8BBE;&#x7F6E;10ms&#x540E;&#x89E6;&#x53D1;&#x4E0B;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x6BCF;&#x89E6;&#x53D1;100&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF08;1&#x79D2;&#x949F;&#xFF09;&#x8F93;&#x51FA;&#x4E00;&#x884C;&#x4FE1;&#x606F;&#x5230;&#x63A7;&#x5236;&#x53F0;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/trap/trap.c</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;clock.h&gt;</span></span>
+
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> TICK_NUM <span class="hljs-number">100</span></span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print_ticks</span><span class="hljs-params">()</span> </span>{
+    cprintf(<span class="hljs-string">&quot;%d ticks\n&quot;</span>, TICK_NUM);
+<span class="hljs-preprocessor">#<span class="hljs-keyword">ifdef</span> DEBUG_GRADE</span>
+    cprintf(<span class="hljs-string">&quot;End of Test.\n&quot;</span>);
+    panic(<span class="hljs-string">&quot;EOT: kernel seems ok.&quot;</span>);
+<span class="hljs-preprocessor">#<span class="hljs-keyword">endif</span></span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">interrupt_handler</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> trapframe *tf)</span> </span>{
+    <span class="hljs-keyword">intptr_t</span> cause = (tf-&gt;cause &lt;&lt; <span class="hljs-number">1</span>) &gt;&gt; <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">switch</span> (cause) {
+           <span class="hljs-comment">/* blabla &#x5176;&#x4ED6;case*/</span>
+        <span class="hljs-keyword">case</span> IRQ_S_TIMER:
+            clock_set_next_event();<span class="hljs-comment">//&#x53D1;&#x751F;&#x8FD9;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x8BBE;&#x7F6E;&#x4E0B;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</span>
+            <span class="hljs-keyword">if</span> (++ticks % TICK_NUM == <span class="hljs-number">0</span>) {
+                print_ticks();
+            }
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-comment">/* blabla &#x5176;&#x4ED6;case*/</span>
+}
+</code></pre>
+<p>&#x73B0;&#x5728;&#x6267;&#x884C;<code>make qemu</code>, &#x5E94;&#x8BE5;&#x80FD;&#x770B;&#x5230;&#x6253;&#x5370;&#x4E00;&#x884C;&#x884C;&#x7684;<code>100 ticks</code></p>
+<p>&#x76EE;&#x524D;&#x4E3A;&#x6B62;&#x7684;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x5728;<a href="https://github.com/Liurunda/riscv64-ucore/tree/lab1/lab1" target="_blank">&#x8FD9;&#x91CC;</a>&#x627E;&#x5230;&#xFF0C;&#x9047;&#x5230;&#x56F0;&#x96BE;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x3002;</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="2_trap.html" class="navigation navigation-prev " aria-label="Previous page: 中断处理程序">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="structure.html" class="navigation navigation-next " aria-label="Next page: 项目组成和执行流">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"滴答滴答(时钟中断)","level":"1.4.3","depth":2,"next":{"title":"项目组成和执行流","level":"1.4.4","depth":2,"path":"lab1/structure.md","ref":"lab1/structure.md","articles":[]},"previous":{"title":"中断处理程序","level":"1.4.2","depth":2,"path":"lab1/2_trap.md","ref":"lab1/2_trap.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{"maxIndexSize":1000000},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"lab1/3_clock.md","mtime":"2021-03-12T01:33:10.453Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-03-12T02:49:32.521Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,1355 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>页面置换机制 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="4_fifo.html" />
+    
+    
+    <link rel="prev" href="2_pagetable.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    欢迎来到ucore step-by-step的世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../lab0/intro.html">
+            
+                <a href="../lab0/intro.html">
+            
+                    
+                    lab0: 预备起
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../lab0/1_history.html">
+            
+                <a href="../lab0/1_history.html">
+            
+                    
+                    溯源: ucore的历史
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../lab0/2_overview.html">
+            
+                <a href="../lab0/2_overview.html">
+            
+                    
+                    概览: 指导书的结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../lab0/3_startdash.html">
+            
+                <a href="../lab0/3_startdash.html">
+            
+                    
+                    开搞: 实验环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../lab0.5/intro.html">
+            
+                <a href="../lab0.5/intro.html">
+            
+                    
+                    lab0.5: 比麻雀更小的麻雀(最小可执行内核)
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../lab0.5/1_layout.html">
+            
+                <a href="../lab0.5/1_layout.html">
+            
+                    
+                    内存布局，OpenSBI，elf和bin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../lab0.5/2_linkerscript.html">
+            
+                <a href="../lab0.5/2_linkerscript.html">
+            
+                    
+                    链接脚本和入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../lab0.5/3_kern_init.html">
+            
+                <a href="../lab0.5/3_kern_init.html">
+            
+                    
+                    "真正的"入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../lab0.5/4_sbi_io.html">
+            
+                <a href="../lab0.5/4_sbi_io.html">
+            
+                    
+                    从SBI到stdio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../lab0.5/5_makeit.html">
+            
+                <a href="../lab0.5/5_makeit.html">
+            
+                    
+                    Just make it
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../lab0.5/structure.html">
+            
+                <a href="../lab0.5/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../lab1/intro.html">
+            
+                <a href="../lab1/intro.html">
+            
+                    
+                    lab1: 断, 都可以断
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../lab1/1_trapentry.html">
+            
+                <a href="../lab1/1_trapentry.html">
+            
+                    
+                    掉进兔子洞(中断入口点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../lab1/2_trap.html">
+            
+                <a href="../lab1/2_trap.html">
+            
+                    
+                    中断处理程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../lab1/3_clock.html">
+            
+                <a href="../lab1/3_clock.html">
+            
+                    
+                    滴答滴答(时钟中断)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../lab1/structure.html">
+            
+                <a href="../lab1/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../lab2/intro.html">
+            
+                <a href="../lab2/intro.html">
+            
+                    
+                    lab2: 物理内存和页表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../lab2/1_init.html">
+            
+                <a href="../lab2/1_init.html">
+            
+                    
+                    内核初始映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../lab2/2_physical.html">
+            
+                <a href="../lab2/2_physical.html">
+            
+                    
+                    物理内存管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../lab2/3_alloc.html">
+            
+                <a href="../lab2/3_alloc.html">
+            
+                    
+                    页面分配算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../lab2/structure.html">
+            
+                <a href="../lab2/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="intro.html">
+            
+                <a href="intro.html">
+            
+                    
+                    lab3: 缺页异常和页面置换
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="1_pagefault.html">
+            
+                <a href="1_pagefault.html">
+            
+                    
+                    扫清外围
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="2_pagetable.html">
+            
+                <a href="2_pagetable.html">
+            
+                    
+                    使用多级页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6.3" data-path="3_swap.html">
+            
+                <a href="3_swap.html">
+            
+                    
+                    页面置换机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="4_fifo.html">
+            
+                <a href="4_fifo.html">
+            
+                    
+                    FIFO置换算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="structure.html">
+            
+                <a href="structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../lab4/intro.html">
+            
+                <a href="../lab4/intro.html">
+            
+                    
+                    lab4: 进程管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../lab4/1_process.html">
+            
+                <a href="../lab4/1_process.html">
+            
+                    
+                    进程与线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../lab4/2_struct.html">
+            
+                <a href="../lab4/2_struct.html">
+            
+                    
+                    相关数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../lab4/3_init.html">
+            
+                <a href="../lab4/3_init.html">
+            
+                    
+                    进程模块初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../lab4/4_switch.html">
+            
+                <a href="../lab4/4_switch.html">
+            
+                    
+                    进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../lab4/structure.html">
+            
+                <a href="../lab4/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../lab5/intro.html">
+            
+                <a href="../lab5/intro.html">
+            
+                    
+                    lab5: 用户程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../lab5/1_user.html">
+            
+                <a href="../lab5/1_user.html">
+            
+                    
+                    用户程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../lab5/2_syscall.html">
+            
+                <a href="../lab5/2_syscall.html">
+            
+                    
+                    system call!
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../lab5/3_trap.html">
+            
+                <a href="../lab5/3_trap.html">
+            
+                    
+                    中断处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../lab5/structure.html">
+            
+                <a href="../lab5/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../lab6/intro.html">
+            
+                <a href="../lab6/intro.html">
+            
+                    
+                    lab6: 进程调度
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../lab6/1_switch.html">
+            
+                <a href="../lab6/1_switch.html">
+            
+                    
+                    再次认识进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../lab6/2_schedule.html">
+            
+                <a href="../lab6/2_schedule.html">
+            
+                    
+                    调度算法框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../lab6/structure.html">
+            
+                <a href="../lab6/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../lab7/intro.html">
+            
+                <a href="../lab7/intro.html">
+            
+                    
+                    lab7: 同步互斥
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../lab7/1_concept.html">
+            
+                <a href="../lab7/1_concept.html">
+            
+                    
+                    同步互斥的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../lab7/2_semaphore.html">
+            
+                <a href="../lab7/2_semaphore.html">
+            
+                    
+                    信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../lab7/3_monitor.html">
+            
+                <a href="../lab7/3_monitor.html">
+            
+                    
+                    条件变量与管程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../lab7/structure.html">
+            
+                <a href="../lab7/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../lab8/intro.html">
+            
+                <a href="../lab8/intro.html">
+            
+                    
+                    lab8: 文件系统
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../lab8/3_vfs.html">
+            
+                <a href="../lab8/3_vfs.html">
+            
+                    
+                    文件系统抽象层VFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../lab8/1_sfs.html">
+            
+                <a href="../lab8/1_sfs.html">
+            
+                    
+                    硬盘文件系统SFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../lab8/2_device.html">
+            
+                <a href="../lab8/2_device.html">
+            
+                    
+                    设备即文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../lab8/4_shell.html">
+            
+                <a href="../lab8/4_shell.html">
+            
+                    
+                    从zhong duan 到 zhong duan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../lab8/structure.html">
+            
+                <a href="../lab8/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../excercise/intro.html">
+            
+                <a href="../excercise/intro.html">
+            
+                    
+                    练习题
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../excercise/1_lab1.html">
+            
+                <a href="../excercise/1_lab1.html">
+            
+                    
+                    lab1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../excercise/2_lab2.html">
+            
+                <a href="../excercise/2_lab2.html">
+            
+                    
+                    lab2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../excercise/3_lab3.html">
+            
+                <a href="../excercise/3_lab3.html">
+            
+                    
+                    lab3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../excercise/4_lab4.html">
+            
+                <a href="../excercise/4_lab4.html">
+            
+                    
+                    lab4
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../excercise/5_lab5.html">
+            
+                <a href="../excercise/5_lab5.html">
+            
+                    
+                    lab5
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.6" data-path="../excercise/6_lab6.html">
+            
+                <a href="../excercise/6_lab6.html">
+            
+                    
+                    lab6
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.7" data-path="../excercise/7_lab7.html">
+            
+                <a href="../excercise/7_lab7.html">
+            
+                    
+                    lab7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.8" data-path="../excercise/8_lab8.html">
+            
+                <a href="../excercise/8_lab8.html">
+            
+                    
+                    lab8
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../appendix/intro.html">
+            
+                <a href="../appendix/intro.html">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../appendix/1_makefile.html">
+            
+                <a href="../appendix/1_makefile.html">
+            
+                    
+                    makefile
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >页面置换机制</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="lab3-3n-&#x9875;&#x9762;&#x7F6E;&#x6362;&#x673A;&#x5236;">lab3 3/n &#x9875;&#x9762;&#x7F6E;&#x6362;&#x673A;&#x5236;</h1>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x770B;ucore&#x9875;&#x9762;&#x7F6E;&#x6362;&#x673A;&#x5236;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+<p>&#x9875;&#x9762;&#x7F6E;&#x6362;&#x673A;&#x5236;&#x4E2D;&#xFF0C; &#x6211;&#x4EEC;&#x9700;&#x8981;&#x7EF4;&#x62A4;&#x4E00;&#x4E9B;&#x201D;&#x4E0D;&#x5728;&#x5185;&#x5B58;&#x5F53;&#x4E2D;&#x4F46;&#x662F;&#x4E5F;&#x8BB8;&#x4F1A;&#x7528;&#x5230;&#x201C;&#x7684;&#x9875;&#xFF0C;&#x5B83;&#x4EEC;&#x5B58;&#x50A8;&#x5728;&#x78C1;&#x76D8;&#x7684;&#x4EA4;&#x6362;&#x533A;&#x91CC;&#xFF0C;&#x4E5F;&#x6709;&#x5BF9;&#x5E94;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF0C;&#x4F46;&#x662F;&#x56E0;&#x4E3A;&#x5B83;&#x4EEC;&#x4E0D;&#x5728;&#x5185;&#x5B58;&#x91CC;&#xFF0C;&#x5728;&#x9875;&#x8868;&#x91CC;&#x5E76;&#x6CA1;&#x6709;&#x5BF9;&#x5B83;&#x4EEC;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x8FDB;&#x884C;&#x6620;&#x5C04;&#x3002;&#x4F46;&#x662F;&#x5728;&#x53D1;&#x751F;Page Fault&#x4E4B;&#x540E;&#xFF0C;&#x4F1A;&#x628A;&#x8BBF;&#x95EE;&#x5230;&#x7684;&#x9875;&#x653E;&#x5230;&#x5185;&#x5B58;&#x91CC;&#xFF0C;&#x8FD9;&#x65F6;&#x4E5F;&#x8BB8;&#x4F1A;&#x628A;&#x5176;&#x4ED6;&#x9875;&#x6254;&#x51FA;&#x53BB;&#xFF0C;&#x6765;&#x7ED9;&#x8981;&#x7528;&#x7684;&#x9875;&#x817E;&#x51FA;&#x5730;&#x65B9;&#x3002;&#x9875;&#x9762;&#x7F6E;&#x6362;&#x7B97;&#x6CD5;&#x7684;&#x6838;&#x5FC3;&#x4EFB;&#x52A1;&#xFF0C;&#x4E3B;&#x8981;&#x5C31;&#x662F;&#x786E;&#x5B9A;&#x201D;&#x628A;&#x8C01;&#x6254;&#x51FA;&#x53BB;&#x201C;&#x3002;</p>
+<p>&#x9875;&#x8868;&#x91CC;&#x7684;&#x4FE1;&#x606F;&#x53EA;&#x662F;&quot;&#x5F53;&#x524D;&#x54EA;&#x4E9B;&#x6570;&#x636E;&#x5728;&#x5185;&#x5B58;&#x6761;&#x91CC;&#x4EE5;&#x53CA;&#x5B83;&#x4EEC;&#x7269;&#x7406;&#x5730;&#x5740;&#x548C;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7684;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&quot;, &#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E00;&#x4E9B;&#x9875;&#x8868;&#x4E4B;&#x5916;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x6765;&#x7EF4;&#x62A4;&#x5F53;&#x524D;&#x9875;&#x8868;&#x91CC;&#x6CA1;&#x6620;&#x5C04;&#x7684;&#x9875;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#xFF1A;&#x6709;&#x54EA;&#x4E9B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5BF9;&#x5E94;&#x7684;&#x9875;&#x5F53;&#x524D;&#x5728;&#x78C1;&#x76D8;&#x4E0A;&#xFF0C;&#x5206;&#x522B;&#x5728;&#x78C1;&#x76D8;&#x4E0A;&#x7684;&#x54EA;&#x4E2A;&#x4F4D;&#x7F6E;&#x3002;&#x6709;&#x54EA;&#x4E9B;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5BF9;&#x5E94;&#x7684;&#x9875;&#x9762;&#x5F53;&#x524D;&#x653E;&#x5728;&#x5185;&#x5B58;&#x91CC;&#x3002;&#x8FD9;&#x4E24;&#x7C7B;&#x9875;&#x9762;&#xFF08;&#x5185;&#x5B58;&#x4E0A;&#x7684;&#xFF0C;&#x78C1;&#x76D8;&#x4E0A;&#x7684;&#xFF09;&#x4F1A;&#x76F8;&#x4E92;&#x8F6C;&#x6362;(&#x6362;&#x5165;/&#x6362;&#x51FA;&#x5185;&#x5B58;)&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5C06;&#x8FD9;&#x4E24;&#x7C7B;&#x9875;&#x9762;&#x4E00;&#x8D77;&#x7EF4;&#x62A4;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x7EF4;&#x62A4;&#x201D;&#x6240;&#x6709;&#x53EF;&#x7528;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;/&#x865A;&#x62DF;&#x9875;&#x7684;&#x96C6;&#x5408;&#x201C;&#xFF08;&#x4E0D;&#x8BBA;&#x5F53;&#x524D;&#x8FD9;&#x4E2A;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5BF9;&#x5E94;&#x7684;&#x9875;&#x5728;&#x5185;&#x5B58;&#x4E0A;&#x8FD8;&#x662F;&#x5728;&#x786C;&#x76D8;&#x4E0A;&#xFF09;&#x3002;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x5C06;&#x8981;&#x5B9E;&#x73B0;&#x8FDB;&#x7A0B;&#x673A;&#x5236;&#xFF0C;&#x5BF9;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x53EF;&#x7528;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF08;&#x865A;&#x62DF;&#x9875;&#xFF09;&#x7684;&#x96C6;&#x5408;&#x5E38;&#x5E38;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x9875;&#x8868;&#xFF0C;&#x4E5F;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x6765;&#x7EF4;&#x62A4;&#x201C;&#x6240;&#x6709;&#x53EF;&#x7528;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x201D;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x5728;vmm.h&#x5B9A;&#x4E49;&#x4E24;&#x4E2A;&#x7ED3;&#x6784;&#x4F53; (vmm&#xFF1A; virtural memory management)&#x3002;</p>
+<p><code>vma_struct</code>&#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;&#x4E00;&#x6BB5;&#x8FDE;&#x7EED;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#xFF0C;&#x4ECE;<code>vm_start</code>&#x5230;<code>vm_end</code>&#x3002; &#x901A;&#x8FC7;&#x5305;&#x542B;&#x4E00;&#x4E2A;<code>list_entry_t</code>&#x6210;&#x5458;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A;&#x540C;&#x4E00;&#x4E2A;&#x9875;&#x8868;&#x5BF9;&#x5E94;&#x7684;&#x591A;&#x4E2A;<code>vma_struct</code>&#x7ED3;&#x6784;&#x4F53;&#x4E32;&#x6210;&#x4E00;&#x4E2A;&#x94FE;&#x8868;&#xFF0C;&#x5728;&#x94FE;&#x8868;&#x91CC;&#x628A;&#x5B83;&#x4EEC;&#x6309;&#x7167;&#x533A;&#x95F4;&#x7684;&#x8D77;&#x59CB;&#x70B9;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x3002;</p>
+<p><code>vm_flags</code>&#x8868;&#x793A;&#x7684;&#x662F;&#x4E00;&#x6BB5;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5BF9;&#x5E94;&#x7684;&#x6743;&#x9650;&#xFF08;&#x53EF;&#x8BFB;&#xFF0C;&#x53EF;&#x5199;&#xFF0C;&#x53EF;&#x6267;&#x884C;&#x7B49;&#xFF09;&#xFF0C;&#x8FD9;&#x4E2A;&#x6743;&#x9650;&#x5728;&#x9875;&#x8868;&#x9879;&#x91CC;&#x4E5F;&#x8981;&#x8FDB;&#x884C;&#x5BF9;&#x5E94;&#x7684;&#x8BBE;&#x7F6E;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x6CE8;&#x610F;&#x5230;&#xFF0C;&#x6BCF;&#x4E2A;&#x9875;&#x8868;&#xFF08;&#x6BCF;&#x4E2A;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#xFF09;&#x53EF;&#x80FD;&#x5305;&#x542B;&#x591A;&#x4E2A;<code>vma_struct</code>, &#x4E5F;&#x5C31;&#x662F;&#x591A;&#x4E2A;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x53EF;&#x80FD;&#x4E0D;&#x540C;&#x7684;&#xFF0C;&#x4E0D;&#x76F8;&#x4EA4;&#x7684;&#x8FDE;&#x7EED;&#x5730;&#x5740;&#x533A;&#x95F4;&#x3002;&#x6211;&#x4EEC;&#x7528;<code>mm_struct</code>&#x7ED3;&#x6784;&#x4F53;&#x628A;&#x4E00;&#x4E2A;&#x9875;&#x8868;&#x5BF9;&#x5E94;&#x7684;&#x4FE1;&#x606F;&#x7EC4;&#x5408;&#x8D77;&#x6765;&#xFF0C;&#x5305;&#x62EC;<code>vma_struct</code>&#x94FE;&#x8868;&#x7684;&#x9996;&#x6307;&#x9488;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x9875;&#x8868;&#x5728;&#x5185;&#x5B58;&#x91CC;&#x7684;&#x6307;&#x9488;&#xFF0C;<code>vma_struct</code>&#x94FE;&#x8868;&#x7684;&#x5143;&#x7D20;&#x4E2A;&#x6570;&#x3002;</p>
+<p>&#xFF08;&#x53C2;&#x8003;<code>libs/list.h</code>&#xFF09;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/mm/vmm.h</span>
+<span class="hljs-comment">//pre define</span>
+<span class="hljs-keyword">struct</span> mm_struct;
+
+<span class="hljs-comment">// the virtual continuous memory area(vma), [vm_start, vm_end),</span>
+<span class="hljs-comment">// addr belong to a vma means  vma.vm_start&lt;= addr &lt;vma.vm_end</span>
+<span class="hljs-keyword">struct</span> vma_struct {
+    <span class="hljs-keyword">struct</span> mm_struct *vm_mm; <span class="hljs-comment">// the set of vma using the same PDT</span>
+    <span class="hljs-keyword">uintptr_t</span> vm_start;      <span class="hljs-comment">// start addr of vma</span>
+    <span class="hljs-keyword">uintptr_t</span> vm_end;        <span class="hljs-comment">// end addr of vma, not include the vm_end itself</span>
+    <span class="hljs-keyword">uint_t</span> vm_flags;       <span class="hljs-comment">// flags of vma</span>
+    <span class="hljs-keyword">list_entry_t</span> list_link;  <span class="hljs-comment">// linear list link which sorted by start addr of vma</span>
+};
+
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> le2vma(le, member)                  \
+    to_struct((le), struct vma_struct, member)</span>
+
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> VM_READ                 <span class="hljs-number">0x00000001</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> VM_WRITE                <span class="hljs-number">0x00000002</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> VM_EXEC                 <span class="hljs-number">0x00000004</span></span>
+
+<span class="hljs-comment">// the control struct for a set of vma using the same Page Table</span>
+<span class="hljs-keyword">struct</span> mm_struct {
+    <span class="hljs-keyword">list_entry_t</span> mmap_list;        <span class="hljs-comment">// linear list link which sorted by start addr of vma</span>
+    <span class="hljs-keyword">struct</span> vma_struct *mmap_cache; <span class="hljs-comment">// current accessed vma, used for speed purpose</span>
+    <span class="hljs-keyword">pde_t</span> *pgdir;                  <span class="hljs-comment">// the Page Table of these vma</span>
+    <span class="hljs-keyword">int</span> map_count;                 <span class="hljs-comment">// the count of these vma</span>
+    <span class="hljs-keyword">void</span> *sm_priv;                   <span class="hljs-comment">// the private data for swap manager</span>
+};
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E3A;<code>vma_struct</code>&#x548C;<code>mm_struct</code>&#x5B9A;&#x4E49;&#x548C;&#x5B9E;&#x73B0;&#x4E00;&#x4E9B;&#x63A5;&#x53E3;&#xFF1A;&#x5305;&#x62EC;&#x5B83;&#x4EEC;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x4EE5;&#x53CA;&#x5982;&#x4F55;&#x628A;&#x65B0;&#x7684;<code>vma_struct</code>&#x63D2;&#x5165;&#x5230;<code>mm_struct</code>&#x5BF9;&#x5E94;&#x7684;&#x94FE;&#x8868;&#x91CC;&#x3002;&#x6CE8;&#x610F;&#x8FD9;&#x4E24;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#x5360;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x9700;&#x8981;&#x7528;<code>kmalloc()</code>&#x51FD;&#x6570;&#x52A8;&#x6001;&#x5206;&#x914D;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/mm/vmm.c</span>
+<span class="hljs-comment">// mm_create -  alloc a mm_struct &amp; initialize it.</span>
+<span class="hljs-function"><span class="hljs-keyword">struct</span> mm_struct *
+<span class="hljs-title">mm_create</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-keyword">struct</span> mm_struct *mm = kmalloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> mm_struct));
+
+    <span class="hljs-keyword">if</span> (mm != <span class="hljs-literal">NULL</span>) {
+        list_init(&amp;(mm-&gt;mmap_list));
+        mm-&gt;mmap_cache = <span class="hljs-literal">NULL</span>;
+        mm-&gt;pgdir = <span class="hljs-literal">NULL</span>;
+        mm-&gt;map_count = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">if</span> (swap_init_ok) swap_init_mm(mm);<span class="hljs-comment">//&#x6211;&#x4EEC;&#x63A5;&#x4E0B;&#x6765;&#x89E3;&#x91CA;&#x9875;&#x9762;&#x7F6E;&#x6362;&#x7684;&#x521D;&#x59CB;&#x5316;</span>
+        <span class="hljs-keyword">else</span> mm-&gt;sm_priv = <span class="hljs-literal">NULL</span>;
+    }
+    <span class="hljs-keyword">return</span> mm;
+}
+
+<span class="hljs-comment">// vma_create - alloc a vma_struct &amp; initialize it. (addr range: vm_start~vm_end)</span>
+<span class="hljs-function"><span class="hljs-keyword">struct</span> vma_struct *
+<span class="hljs-title">vma_create</span><span class="hljs-params">(uintptr_t vm_start, uintptr_t vm_end, uint_t vm_flags)</span> </span>{
+    <span class="hljs-keyword">struct</span> vma_struct *vma = kmalloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> vma_struct));
+    <span class="hljs-keyword">if</span> (vma != <span class="hljs-literal">NULL</span>) {
+        vma-&gt;vm_start = vm_start;
+        vma-&gt;vm_end = vm_end;
+        vma-&gt;vm_flags = vm_flags;
+    }
+    <span class="hljs-keyword">return</span> vma;
+}
+</code></pre>
+<p>&#x5728;&#x63D2;&#x5165;&#x4E00;&#x4E2A;&#x65B0;&#x7684;<code>vma_struct</code>&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x4FDD;&#x8BC1;&#x5B83;&#x548C;&#x539F;&#x6709;&#x7684;&#x533A;&#x95F4;&#x90FD;&#x4E0D;&#x91CD;&#x5408;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/mm/vmm.c</span>
+<span class="hljs-comment">// check_vma_overlap - check if vma1 overlaps vma2 ?</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span>
+<span class="hljs-title">check_vma_overlap</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> vma_struct *prev, <span class="hljs-keyword">struct</span> vma_struct *next)</span> </span>{
+    assert(prev-&gt;vm_start &lt; prev-&gt;vm_end);
+    assert(prev-&gt;vm_end &lt;= next-&gt;vm_start);
+    assert(next-&gt;vm_start &lt; next-&gt;vm_end);<span class="hljs-comment">// next &#x662F;&#x6211;&#x4EEC;&#x60F3;&#x63D2;&#x5165;&#x7684;&#x533A;&#x95F4;&#xFF0C;&#x8FD9;&#x91CC;&#x987A;&#x4FBF;&#x68C0;&#x9A8C;&#x4E86;start &lt; end</span>
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x63D2;&#x5165;&#x4E00;&#x4E2A;&#x65B0;&#x7684;<code>vma_struct</code>, &#x4E5F;&#x53EF;&#x4EE5;&#x67E5;&#x627E;&#x67D0;&#x4E2A;&#x865A;&#x62DF;&#x5730;&#x5740;&#x5BF9;&#x5E94;&#x7684;<code>vma_struct</code>&#x662F;&#x5426;&#x5B58;&#x5728;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/mm/vmm.c</span>
+
+<span class="hljs-comment">// insert_vma_struct -insert vma in mm&apos;s list link</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span>
+<span class="hljs-title">insert_vma_struct</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> mm_struct *mm, <span class="hljs-keyword">struct</span> vma_struct *vma)</span> </span>{
+    assert(vma-&gt;vm_start &lt; vma-&gt;vm_end);
+    <span class="hljs-keyword">list_entry_t</span> *<span class="hljs-built_in">list</span> = &amp;(mm-&gt;mmap_list);
+    <span class="hljs-keyword">list_entry_t</span> *le_prev = <span class="hljs-built_in">list</span>, *le_next;
+
+        <span class="hljs-keyword">list_entry_t</span> *le = <span class="hljs-built_in">list</span>;
+        <span class="hljs-keyword">while</span> ((le = list_next(le)) != <span class="hljs-built_in">list</span>) {
+            <span class="hljs-keyword">struct</span> vma_struct *mmap_prev = le2vma(le, list_link);
+            <span class="hljs-keyword">if</span> (mmap_prev-&gt;vm_start &gt; vma-&gt;vm_start) {
+                <span class="hljs-keyword">break</span>;
+            }
+            le_prev = le;
+        }
+    <span class="hljs-comment">//&#x4FDD;&#x8BC1;&#x63D2;&#x5165;&#x540E;&#x6240;&#x6709;vma_struct&#x6309;&#x7167;&#x533A;&#x95F4;&#x5DE6;&#x7AEF;&#x70B9;&#x6709;&#x5E8F;&#x6392;&#x5217;</span>
+    le_next = list_next(le_prev);
+
+    <span class="hljs-comment">/* check overlap */</span>
+    <span class="hljs-keyword">if</span> (le_prev != <span class="hljs-built_in">list</span>) {
+        check_vma_overlap(le2vma(le_prev, list_link), vma);
+    }
+    <span class="hljs-keyword">if</span> (le_next != <span class="hljs-built_in">list</span>) {
+        check_vma_overlap(vma, le2vma(le_next, list_link));
+    }
+
+    vma-&gt;vm_mm = mm;
+    list_add_after(le_prev, &amp;(vma-&gt;list_link));
+
+    mm-&gt;map_count ++;<span class="hljs-comment">//&#x8BA1;&#x6570;&#x5668;</span>
+}
+
+<span class="hljs-comment">// find_vma - find a vma  (vma-&gt;vm_start &lt;= addr &lt;= vma_vm_end)</span>
+<span class="hljs-comment">//&#x5982;&#x679C;&#x8FD4;&#x56DE;NULL&#xFF0C;&#x8BF4;&#x660E;&#x67E5;&#x8BE2;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x4E0D;&#x5B58;&#x5728;/&#x4E0D;&#x5408;&#x6CD5;&#xFF0C;&#x65E2;&#x4E0D;&#x5BF9;&#x5E94;&#x5185;&#x5B58;&#x91CC;&#x7684;&#x67D0;&#x4E2A;&#x9875;&#xFF0C;&#x4E5F;&#x4E0D;&#x5BF9;&#x5E94;&#x786C;&#x76D8;&#x91CC;&#x67D0;&#x4E2A;&#x53EF;&#x4EE5;&#x6362;&#x8FDB;&#x6765;&#x7684;&#x9875;</span>
+<span class="hljs-function"><span class="hljs-keyword">struct</span> vma_struct *
+<span class="hljs-title">find_vma</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> mm_struct *mm, uintptr_t addr)</span> </span>{
+    <span class="hljs-keyword">struct</span> vma_struct *vma = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">if</span> (mm != <span class="hljs-literal">NULL</span>) {
+        vma = mm-&gt;mmap_cache;
+        <span class="hljs-keyword">if</span> (!(vma != <span class="hljs-literal">NULL</span> &amp;&amp; vma-&gt;vm_start &lt;= addr &amp;&amp; vma-&gt;vm_end &gt; addr)) {
+                <span class="hljs-keyword">bool</span> found = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">list_entry_t</span> *<span class="hljs-built_in">list</span> = &amp;(mm-&gt;mmap_list), *le = <span class="hljs-built_in">list</span>;
+                <span class="hljs-keyword">while</span> ((le = list_next(le)) != <span class="hljs-built_in">list</span>) {
+                    vma = le2vma(le, list_link);
+                    <span class="hljs-keyword">if</span> (vma-&gt;vm_start&lt;=addr &amp;&amp; addr &lt; vma-&gt;vm_end) {
+                        found = <span class="hljs-number">1</span>;
+                        <span class="hljs-keyword">break</span>;
+                    }
+                }
+                <span class="hljs-keyword">if</span> (!found) {
+                    vma = <span class="hljs-literal">NULL</span>;
+                }
+        }
+        <span class="hljs-keyword">if</span> (vma != <span class="hljs-literal">NULL</span>) {
+            mm-&gt;mmap_cache = vma;
+        }
+    }
+    <span class="hljs-keyword">return</span> vma;
+}
+</code></pre>
+<p>&#x8003;&#x8651;&#x5F53;&#x53D1;&#x751F;Page Fault&#x7684;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x600E;&#x4E48;&#x505A;&#x3002;&#x56DE;&#x987E;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#xFF0C;&#x6211;&#x4EEC;&#x7684;<code>trapFrame</code>&#x4F20;&#x9012;&#x4E86;<code>badvaddr</code>&#x7ED9;<code>do_pgfault()</code>&#x51FD;&#x6570;&#x3002;&#x8FD9;&#x5B9E;&#x9645;&#x4E0A;&#x662F;<code>stval</code>&#x8FD9;&#x4E2A;&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x6570;&#x503C;&#xFF08;&#x5728;&#x65E7;&#x7248;&#x7684;RISCV&#x6807;&#x51C6;&#x91CC;&#x53EB;&#x505A;<code>sbadvaddr</code>)&#xFF0C;&#x8FD9;&#x4E2A;&#x5BC4;&#x5B58;&#x5668;&#x5B58;&#x50A8;&#x4E00;&#x4E9B;&#x5173;&#x4E8E;&#x5F02;&#x5E38;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5BF9;&#x4E8E;<code>PageFault</code>&#x5B83;&#x5B58;&#x50A8;&#x7684;&#x662F;&#x8BBF;&#x95EE;&#x51FA;&#x9519;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/trap/trap.c</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">pgfault_handler</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> trapframe *tf)</span> </span>{
+    <span class="hljs-keyword">extern</span> <span class="hljs-keyword">struct</span> mm_struct *check_mm_struct;<span class="hljs-comment">//&#x5F53;&#x524D;&#x4F7F;&#x7528;&#x7684;mm_struct&#x7684;&#x6307;&#x9488;&#xFF0C;&#x5728;vmm.c&#x5B9A;&#x4E49;</span>
+    print_pgfault(tf);
+    <span class="hljs-keyword">if</span> (check_mm_struct != <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-keyword">return</span> do_pgfault(check_mm_struct, tf-&gt;cause, tf-&gt;badvaddr);
+    }
+    panic(<span class="hljs-string">&quot;unhandled page fault.\n&quot;</span>);
+}
+<span class="hljs-comment">// kern/mm/vmm.c</span>
+<span class="hljs-keyword">struct</span> mm_struct *check_mm_struct;
+
+<span class="hljs-comment">// check_pgfault - check correctness of pgfault handler</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span>
+<span class="hljs-title">check_pgfault</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-comment">/* ...... */</span>
+    check_mm_struct = mm_create();
+    <span class="hljs-comment">/* ...... */</span>
+}
+</code></pre>
+<p><code>do_pgfault()</code>&#x51FD;&#x6570;&#x5728;<code>vmm.c</code>&#x5B9A;&#x4E49;&#xFF0C;&#x662F;&#x9875;&#x9762;&#x7F6E;&#x6362;&#x673A;&#x5236;&#x7684;&#x6838;&#x5FC3;&#x3002;&#x5982;&#x679C;&#x53EF;&#x884C;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x5BF9;&#x9875;&#x8868;&#x505A;&#x5BF9;&#x5E94;&#x7684;&#x4FEE;&#x6539;&#xFF0C;&#x52A0;&#x5165;&#x5BF9;&#x5E94;&#x7684;&#x9875;&#x8868;&#x9879;&#xFF0C;&#x5E76;&#x628A;&#x786C;&#x76D8;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x6362;&#x8FDB;&#x5185;&#x5B58;&#x3002;&#x8FD9;&#x65F6;&#x53EF;&#x80FD;&#x8981;&#x628A;&#x5185;&#x5B58;&#x91CC;&#x7684;&#x4E00;&#x4E2A;&#x9875;&#x6362;&#x51FA;&#x53BB;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/mm/vmm.c</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">do_pgfault</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> mm_struct *mm, uint_t error_code, uintptr_t addr)</span> </span>{
+    <span class="hljs-comment">//addr: &#x8BBF;&#x95EE;&#x51FA;&#x9519;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;</span>
+    <span class="hljs-keyword">int</span> ret = -E_INVAL;
+    <span class="hljs-comment">//try to find a vma which include addr</span>
+    <span class="hljs-keyword">struct</span> vma_struct *vma = find_vma(mm, addr);
+    <span class="hljs-comment">//&#x6211;&#x4EEC;&#x9996;&#x5148;&#x8981;&#x505A;&#x7684;&#x5C31;&#x662F;&#x5728;mm_struct&#x91CC;&#x5224;&#x65AD;&#x8FD9;&#x4E2A;&#x865A;&#x62DF;&#x5730;&#x5740;&#x662F;&#x5426;&#x53EF;&#x7528;</span>
+    pgfault_num++;
+    <span class="hljs-comment">//If the addr is not in the range of a mm&apos;s vma?</span>
+    <span class="hljs-keyword">if</span> (vma == <span class="hljs-literal">NULL</span> || vma-&gt;vm_start &gt; addr) {
+        cprintf(<span class="hljs-string">&quot;not valid addr %x, and  can not find it in vma\n&quot;</span>, addr);
+        <span class="hljs-keyword">goto</span> failed;
+    }
+
+    <span class="hljs-comment">/* IF (write an existed addr ) OR
+     *    (write an non_existed addr &amp;&amp; addr is writable) OR
+     *    (read  an non_existed addr &amp;&amp; addr is readable)
+     * THEN
+     *    continue process
+     */</span>
+    <span class="hljs-keyword">uint32_t</span> perm = PTE_U;
+    <span class="hljs-keyword">if</span> (vma-&gt;vm_flags &amp; VM_WRITE) {
+        perm |= (PTE_R | PTE_W);
+    }
+    addr = ROUNDDOWN(addr, PGSIZE); <span class="hljs-comment">//&#x6309;&#x7167;&#x9875;&#x9762;&#x5927;&#x5C0F;&#x628A;&#x5730;&#x5740;&#x5BF9;&#x9F50;</span>
+
+    ret = -E_NO_MEM;
+
+    <span class="hljs-keyword">pte_t</span> *ptep=<span class="hljs-literal">NULL</span>;
+
+    ptep = get_pte(mm-&gt;pgdir, addr, <span class="hljs-number">1</span>);  <span class="hljs-comment">//(1) try to find a pte, if pte&apos;s</span>
+                                         <span class="hljs-comment">//PT(Page Table) isn&apos;t existed, then</span>
+                                         <span class="hljs-comment">//create a PT.</span>
+    <span class="hljs-keyword">if</span> (*ptep == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">if</span> (pgdir_alloc_page(mm-&gt;pgdir, addr, perm) == <span class="hljs-literal">NULL</span>) {
+            cprintf(<span class="hljs-string">&quot;pgdir_alloc_page in do_pgfault failed\n&quot;</span>);
+            <span class="hljs-keyword">goto</span> failed;
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">/*
+        * Now we think this pte is a  swap entry, we should load data from disk
+        * to a page with phy addr,
+        * and map the phy addr with logical addr, trigger swap manager to record
+        * the access situation of this page.
+        *
+        *    swap_in(mm, addr, &amp;page) : alloc a memory page, then according to
+        * the swap entry in PTE for addr, find the addr of disk page, read the
+        * content of disk page into this memroy page
+        *     page_insert &#xFF1A; build the map of phy addr of an Page with the virtual addr la
+        *   swap_map_swappable &#xFF1A; set the page swappable
+        */</span>
+        <span class="hljs-keyword">if</span> (swap_init_ok) {
+            <span class="hljs-keyword">struct</span> Page *page = <span class="hljs-literal">NULL</span>;
+            <span class="hljs-comment">//&#x5728;swap_in()&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x4E4B;&#x540E;&#xFF0C;page&#x4FDD;&#x5B58;&#x6362;&#x5165;&#x7684;&#x7269;&#x7406;&#x9875;&#x9762;&#x3002;</span>
+            <span class="hljs-comment">//swap_in()&#x51FD;&#x6570;&#x91CC;&#x9762;&#x53EF;&#x80FD;&#x628A;&#x5185;&#x5B58;&#x91CC;&#x539F;&#x6709;&#x7684;&#x9875;&#x9762;&#x6362;&#x51FA;&#x53BB;</span>
+            swap_in(mm, addr, &amp;page);  <span class="hljs-comment">//(1&#xFF09;According to the mm AND addr, try</span>
+                                       <span class="hljs-comment">//to load the content of right disk page</span>
+                                       <span class="hljs-comment">//into the memory which page managed.</span>
+            page_insert(mm-&gt;pgdir, page, addr, perm); <span class="hljs-comment">//&#x66F4;&#x65B0;&#x9875;&#x8868;&#xFF0C;&#x63D2;&#x5165;&#x65B0;&#x7684;&#x9875;&#x8868;&#x9879;</span>
+            <span class="hljs-comment">//(2) According to the mm, addr AND page, </span>
+            <span class="hljs-comment">// setup the map of phy addr &lt;---&gt; virtual addr</span>
+            swap_map_swappable(mm, addr, page, <span class="hljs-number">1</span>);  <span class="hljs-comment">//(3) make the page swappable.</span>
+            <span class="hljs-comment">//&#x6807;&#x8BB0;&#x8FD9;&#x4E2A;&#x9875;&#x9762;&#x5C06;&#x6765;&#x662F;&#x53EF;&#x4EE5;&#x518D;&#x6362;&#x51FA;&#x7684;</span>
+            page-&gt;pra_vaddr = addr;
+        } <span class="hljs-keyword">else</span> {
+            cprintf(<span class="hljs-string">&quot;no swap_init_ok but ptep is %x, failed\n&quot;</span>, *ptep);
+            <span class="hljs-keyword">goto</span> failed;
+        }
+   }
+
+   ret = <span class="hljs-number">0</span>;
+failed:
+    <span class="hljs-keyword">return</span> ret;
+}
+</code></pre>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x770B;&#x770B;FIFO&#x9875;&#x9762;&#x7F6E;&#x6362;&#x7B97;&#x6CD5;&#x662F;&#x600E;&#x4E48;&#x5728;ucore&#x91CC;&#x5B9E;&#x73B0;&#x7684;&#x3002;</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="2_pagetable.html" class="navigation navigation-prev " aria-label="Previous page: 使用多级页表">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="4_fifo.html" class="navigation navigation-next " aria-label="Next page: FIFO置换算法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"页面置换机制","level":"1.6.3","depth":2,"next":{"title":"FIFO置换算法","level":"1.6.4","depth":2,"path":"lab3/4_fifo.md","ref":"lab3/4_fifo.md","articles":[]},"previous":{"title":"使用多级页表","level":"1.6.2","depth":2,"path":"lab3/2_pagetable.md","ref":"lab3/2_pagetable.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{"maxIndexSize":1000000},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"lab3/3_swap.md","mtime":"2021-03-12T01:33:10.453Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-03-12T02:49:32.521Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+
