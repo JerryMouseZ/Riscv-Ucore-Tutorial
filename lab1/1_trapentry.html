@@ -1150,46 +1150,11 @@ Document Version 20191213</p>
 </table>
 </blockquote>
 <pre><code class="lang-c"><span class="hljs-comment">// kern/trap/trap.h</span>
-<span class="hljs-preprocessor">#<span class="hljs-keyword">ifndef</span> __KERN_TRAP_TRAP_H__</span>
-<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> __KERN_TRAP_TRAP_H__</span>
-
-<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;defs.h&gt;</span></span>
-
 <span class="hljs-keyword">struct</span> pushregs {
-    <span class="hljs-keyword">uintptr_t</span> zero;  <span class="hljs-comment">// Hard-wired zero</span>
-    <span class="hljs-keyword">uintptr_t</span> ra;    <span class="hljs-comment">// Return address</span>
-    <span class="hljs-keyword">uintptr_t</span> sp;    <span class="hljs-comment">// Stack pointer</span>
-    <span class="hljs-keyword">uintptr_t</span> gp;    <span class="hljs-comment">// Global pointer</span>
-    <span class="hljs-keyword">uintptr_t</span> tp;    <span class="hljs-comment">// Thread pointer</span>
-    <span class="hljs-keyword">uintptr_t</span> t0;    <span class="hljs-comment">// Temporary</span>
-    <span class="hljs-keyword">uintptr_t</span> t1;    <span class="hljs-comment">// Temporary</span>
-    <span class="hljs-keyword">uintptr_t</span> t2;    <span class="hljs-comment">// Temporary</span>
-    <span class="hljs-keyword">uintptr_t</span> s0;    <span class="hljs-comment">// Saved register/frame pointer</span>
-    <span class="hljs-keyword">uintptr_t</span> s1;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> a0;    <span class="hljs-comment">// Function argument/return value</span>
-    <span class="hljs-keyword">uintptr_t</span> a1;    <span class="hljs-comment">// Function argument/return value</span>
-    <span class="hljs-keyword">uintptr_t</span> a2;    <span class="hljs-comment">// Function argument</span>
-    <span class="hljs-keyword">uintptr_t</span> a3;    <span class="hljs-comment">// Function argument</span>
-    <span class="hljs-keyword">uintptr_t</span> a4;    <span class="hljs-comment">// Function argument</span>
-    <span class="hljs-keyword">uintptr_t</span> a5;    <span class="hljs-comment">// Function argument</span>
-    <span class="hljs-keyword">uintptr_t</span> a6;    <span class="hljs-comment">// Function argument</span>
-    <span class="hljs-keyword">uintptr_t</span> a7;    <span class="hljs-comment">// Function argument</span>
-    <span class="hljs-keyword">uintptr_t</span> s2;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s3;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s4;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s5;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s6;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s7;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s8;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s9;    <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s10;   <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> s11;   <span class="hljs-comment">// Saved register</span>
-    <span class="hljs-keyword">uintptr_t</span> t3;    <span class="hljs-comment">// Temporary</span>
-    <span class="hljs-keyword">uintptr_t</span> t4;    <span class="hljs-comment">// Temporary</span>
-    <span class="hljs-keyword">uintptr_t</span> t5;    <span class="hljs-comment">// Temporary</span>
-    <span class="hljs-keyword">uintptr_t</span> t6;    <span class="hljs-comment">// Temporary</span>
+    <span class="hljs-comment">//&#x5B9A;&#x4E49;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x7684;&#x901A;&#x7528;&#x5BC4;&#x5B58;&#x5668;</span>
 };
 
+<span class="hljs-comment">// &#x6808;&#x5E27;</span>
 <span class="hljs-keyword">struct</span> trapframe {
     <span class="hljs-keyword">struct</span> pushregs gpr;
     <span class="hljs-keyword">uintptr_t</span> status; <span class="hljs-comment">//sstatus</span>
@@ -1216,37 +1181,7 @@ Document Version 20191213</p>
     #&#x4F9D;&#x6B21;&#x4FDD;&#x5B58;32&#x4E2A;&#x901A;&#x7528;&#x5BC4;&#x5B58;&#x5668;&#x3002;&#x4F46;&#x6808;&#x9876;&#x6307;&#x9488;&#x9700;&#x8981;&#x7279;&#x6B8A;&#x5904;&#x7406;&#x3002;
     #&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x60F3;&#x5728;trapFrame&#x91CC;&#x4FDD;&#x5B58;&#x5206;&#x914D;36&#x4E2A;REGBYTES&#x4E4B;&#x524D;&#x7684;sp
     #&#x4E5F;&#x5C31;&#x662F;&#x4FDD;&#x5B58;&#x4E4B;&#x524D;&#x5199;&#x5230;sscratch&#x91CC;&#x7684;sp&#x7684;&#x503C;
-    STORE x0, 0*REGBYTES(sp)
-    STORE x1, 1*REGBYTES(sp)
-    STORE x3, 3*REGBYTES(sp)
-    STORE x4, 4*REGBYTES(sp)
-    STORE x5, 5*REGBYTES(sp)
-    STORE x6, 6*REGBYTES(sp)
-    STORE x7, 7*REGBYTES(sp)
-    STORE x8, 8*REGBYTES(sp)
-    STORE x9, 9*REGBYTES(sp)
-    STORE x10, 10*REGBYTES(sp)
-    STORE x11, 11*REGBYTES(sp)
-    STORE x12, 12*REGBYTES(sp)
-    STORE x13, 13*REGBYTES(sp)
-    STORE x14, 14*REGBYTES(sp)
-    STORE x15, 15*REGBYTES(sp)
-    STORE x16, 16*REGBYTES(sp)
-    STORE x17, 17*REGBYTES(sp)
-    STORE x18, 18*REGBYTES(sp)
-    STORE x19, 19*REGBYTES(sp)
-    STORE x20, 20*REGBYTES(sp)
-    STORE x21, 21*REGBYTES(sp)
-    STORE x22, 22*REGBYTES(sp)
-    STORE x23, 23*REGBYTES(sp)
-    STORE x24, 24*REGBYTES(sp)
-    STORE x25, 25*REGBYTES(sp)
-    STORE x26, 26*REGBYTES(sp)
-    STORE x27, 27*REGBYTES(sp)
-    STORE x28, 28*REGBYTES(sp)
-    STORE x29, 29*REGBYTES(sp)
-    STORE x30, 30*REGBYTES(sp)
-    STORE x31, 31*REGBYTES(sp)
+    #&#x4FDD;&#x5B58;&#x9700;&#x8981;&#x7684;&#x5BC4;&#x5B58;&#x5668;
     # RISCV&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x4ECE;CSR&#x5199;&#x5230;&#x5185;&#x5B58;, &#x9700;&#x8981;csrr&#x628A;CSR&#x8BFB;&#x53D6;&#x5230;&#x901A;&#x7528;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x518D;&#x4ECE;&#x901A;&#x7528;&#x5BC4;&#x5B58;&#x5668;STORE&#x5230;&#x5185;&#x5B58;
     csrrw s0, sscratch, x0
     csrr s1, sstatus
@@ -1355,7 +1290,7 @@ __trapret:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"掉进兔子洞(中断入口点)","level":"1.4.1","depth":2,"next":{"title":"中断处理程序","level":"1.4.2","depth":2,"path":"lab1/2_trap.md","ref":"lab1/2_trap.md","articles":[]},"previous":{"title":"lab1: 断, 都可以断","level":"1.4","depth":1,"path":"lab1/intro.md","ref":"lab1/intro.md","articles":[{"title":"掉进兔子洞(中断入口点)","level":"1.4.1","depth":2,"path":"lab1/1_trapentry.md","ref":"lab1/1_trapentry.md","articles":[]},{"title":"中断处理程序","level":"1.4.2","depth":2,"path":"lab1/2_trap.md","ref":"lab1/2_trap.md","articles":[]},{"title":"滴答滴答(时钟中断)","level":"1.4.3","depth":2,"path":"lab1/3_clock.md","ref":"lab1/3_clock.md","articles":[]},{"title":"项目组成和执行流","level":"1.4.4","depth":2,"path":"lab1/structure.md","ref":"lab1/structure.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{"maxIndexSize":1000000},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"lab1/1_trapentry.md","mtime":"2021-03-12T01:33:10.453Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-03-12T02:49:32.521Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"掉进兔子洞(中断入口点)","level":"1.4.1","depth":2,"next":{"title":"中断处理程序","level":"1.4.2","depth":2,"path":"lab1/2_trap.md","ref":"lab1/2_trap.md","articles":[]},"previous":{"title":"lab1: 断, 都可以断","level":"1.4","depth":1,"path":"lab1/intro.md","ref":"lab1/intro.md","articles":[{"title":"掉进兔子洞(中断入口点)","level":"1.4.1","depth":2,"path":"lab1/1_trapentry.md","ref":"lab1/1_trapentry.md","articles":[]},{"title":"中断处理程序","level":"1.4.2","depth":2,"path":"lab1/2_trap.md","ref":"lab1/2_trap.md","articles":[]},{"title":"滴答滴答(时钟中断)","level":"1.4.3","depth":2,"path":"lab1/3_clock.md","ref":"lab1/3_clock.md","articles":[]},{"title":"项目组成和执行流","level":"1.4.4","depth":2,"path":"lab1/structure.md","ref":"lab1/structure.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{"maxIndexSize":1000000},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"lab1/1_trapentry.md","mtime":"2021-03-13T13:49:40.216Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-03-13T13:52:24.707Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
@@ -1363,10 +1298,6 @@ __trapret:
         
     <script src="../gitbook/gitbook.js"></script>
     <script src="../gitbook/theme.js"></script>
-    
-        
-        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
-        
     
         
         <script src="../gitbook/gitbook-plugin-search/lunr.min.js"></script>
