@@ -1,0 +1,1268 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>中断处理 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="structure.html" />
+    
+    
+    <link rel="prev" href="2_syscall.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    欢迎来到ucore step-by-step的世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../lab0/intro.html">
+            
+                <a href="../lab0/intro.html">
+            
+                    
+                    lab0: 预备起
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../lab0/1_history.html">
+            
+                <a href="../lab0/1_history.html">
+            
+                    
+                    溯源: ucore的历史
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../lab0/2_overview.html">
+            
+                <a href="../lab0/2_overview.html">
+            
+                    
+                    概览: 指导书的结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../lab0/3_startdash.html">
+            
+                <a href="../lab0/3_startdash.html">
+            
+                    
+                    开搞: 实验环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../lab0.5/intro.html">
+            
+                <a href="../lab0.5/intro.html">
+            
+                    
+                    lab0.5: 比麻雀更小的麻雀(最小可执行内核)
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../lab0.5/1_layout.html">
+            
+                <a href="../lab0.5/1_layout.html">
+            
+                    
+                    内存布局，OpenSBI，elf和bin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../lab0.5/2_linkerscript.html">
+            
+                <a href="../lab0.5/2_linkerscript.html">
+            
+                    
+                    链接脚本和入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../lab0.5/3_kern_init.html">
+            
+                <a href="../lab0.5/3_kern_init.html">
+            
+                    
+                    "真正的"入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../lab0.5/4_sbi_io.html">
+            
+                <a href="../lab0.5/4_sbi_io.html">
+            
+                    
+                    从SBI到stdio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../lab0.5/5_makeit.html">
+            
+                <a href="../lab0.5/5_makeit.html">
+            
+                    
+                    Just make it
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../lab0.5/structure.html">
+            
+                <a href="../lab0.5/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../lab1/intro.html">
+            
+                <a href="../lab1/intro.html">
+            
+                    
+                    lab1: 断, 都可以断
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../lab1/1_trapentry.html">
+            
+                <a href="../lab1/1_trapentry.html">
+            
+                    
+                    掉进兔子洞(中断入口点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../lab1/2_trap.html">
+            
+                <a href="../lab1/2_trap.html">
+            
+                    
+                    中断处理程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../lab1/3_clock.html">
+            
+                <a href="../lab1/3_clock.html">
+            
+                    
+                    滴答滴答(时钟中断)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../lab1/structure.html">
+            
+                <a href="../lab1/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../lab2/intro.html">
+            
+                <a href="../lab2/intro.html">
+            
+                    
+                    lab2: 物理内存和页表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../lab2/1_init.html">
+            
+                <a href="../lab2/1_init.html">
+            
+                    
+                    内核初始映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../lab2/2_physical.html">
+            
+                <a href="../lab2/2_physical.html">
+            
+                    
+                    物理内存管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../lab2/3_alloc.html">
+            
+                <a href="../lab2/3_alloc.html">
+            
+                    
+                    页面分配算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../lab2/structure.html">
+            
+                <a href="../lab2/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../lab3/intro.html">
+            
+                <a href="../lab3/intro.html">
+            
+                    
+                    lab3: 缺页异常和页面置换
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../lab3/1_pagefault.html">
+            
+                <a href="../lab3/1_pagefault.html">
+            
+                    
+                    扫清外围
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../lab3/2_pagetable.html">
+            
+                <a href="../lab3/2_pagetable.html">
+            
+                    
+                    使用多级页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../lab3/3_swap.html">
+            
+                <a href="../lab3/3_swap.html">
+            
+                    
+                    页面置换机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../lab3/4_fifo.html">
+            
+                <a href="../lab3/4_fifo.html">
+            
+                    
+                    FIFO置换算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../lab3/structure.html">
+            
+                <a href="../lab3/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../lab4/intro.html">
+            
+                <a href="../lab4/intro.html">
+            
+                    
+                    lab4: 进程管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../lab4/1_process.html">
+            
+                <a href="../lab4/1_process.html">
+            
+                    
+                    进程与线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../lab4/2_struct.html">
+            
+                <a href="../lab4/2_struct.html">
+            
+                    
+                    相关数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../lab4/3_init.html">
+            
+                <a href="../lab4/3_init.html">
+            
+                    
+                    进程模块初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../lab4/4_switch.html">
+            
+                <a href="../lab4/4_switch.html">
+            
+                    
+                    进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../lab4/structure.html">
+            
+                <a href="../lab4/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="intro.html">
+            
+                <a href="intro.html">
+            
+                    
+                    lab5: 用户程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="1_user.html">
+            
+                <a href="1_user.html">
+            
+                    
+                    用户程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="2_syscall.html">
+            
+                <a href="2_syscall.html">
+            
+                    
+                    system call!
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.8.3" data-path="3_trap.html">
+            
+                <a href="3_trap.html">
+            
+                    
+                    中断处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="structure.html">
+            
+                <a href="structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../lab6/intro.html">
+            
+                <a href="../lab6/intro.html">
+            
+                    
+                    lab6: 进程调度
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../lab6/1_switch.html">
+            
+                <a href="../lab6/1_switch.html">
+            
+                    
+                    再次认识进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../lab6/2_schedule.html">
+            
+                <a href="../lab6/2_schedule.html">
+            
+                    
+                    调度算法框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../lab6/structure.html">
+            
+                <a href="../lab6/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../lab7/intro.html">
+            
+                <a href="../lab7/intro.html">
+            
+                    
+                    lab7: 同步互斥
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../lab7/1_concept.html">
+            
+                <a href="../lab7/1_concept.html">
+            
+                    
+                    同步互斥的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../lab7/2_semaphore.html">
+            
+                <a href="../lab7/2_semaphore.html">
+            
+                    
+                    信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../lab7/3_monitor.html">
+            
+                <a href="../lab7/3_monitor.html">
+            
+                    
+                    条件变量与管程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../lab7/structure.html">
+            
+                <a href="../lab7/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../lab8/intro.html">
+            
+                <a href="../lab8/intro.html">
+            
+                    
+                    lab8: 文件系统
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../lab8/3_vfs.html">
+            
+                <a href="../lab8/3_vfs.html">
+            
+                    
+                    文件系统抽象层VFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../lab8/1_sfs.html">
+            
+                <a href="../lab8/1_sfs.html">
+            
+                    
+                    硬盘文件系统SFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../lab8/2_device.html">
+            
+                <a href="../lab8/2_device.html">
+            
+                    
+                    设备即文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../lab8/4_shell.html">
+            
+                <a href="../lab8/4_shell.html">
+            
+                    
+                    从zhong duan 到 zhong duan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../lab8/structure.html">
+            
+                <a href="../lab8/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../excercise/intro.html">
+            
+                <a href="../excercise/intro.html">
+            
+                    
+                    练习题
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../excercise/1_lab1.html">
+            
+                <a href="../excercise/1_lab1.html">
+            
+                    
+                    lab1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../excercise/2_lab2.html">
+            
+                <a href="../excercise/2_lab2.html">
+            
+                    
+                    lab2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../excercise/3_lab3.html">
+            
+                <a href="../excercise/3_lab3.html">
+            
+                    
+                    lab3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../excercise/4_lab4.html">
+            
+                <a href="../excercise/4_lab4.html">
+            
+                    
+                    lab4
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../excercise/5_lab5.html">
+            
+                <a href="../excercise/5_lab5.html">
+            
+                    
+                    lab5
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.6" data-path="../excercise/6_lab6.html">
+            
+                <a href="../excercise/6_lab6.html">
+            
+                    
+                    lab6
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.7" data-path="../excercise/7_lab7.html">
+            
+                <a href="../excercise/7_lab7.html">
+            
+                    
+                    lab7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.8" data-path="../excercise/8_lab8.html">
+            
+                <a href="../excercise/8_lab8.html">
+            
+                    
+                    lab8
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../appendix/intro.html">
+            
+                <a href="../appendix/intro.html">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../appendix/1_makefile.html">
+            
+                <a href="../appendix/1_makefile.html">
+            
+                    
+                    makefile
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >中断处理</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="lab5-3n-&#x4E2D;&#x65AD;&#x5904;&#x7406;">lab5 3/n &#x4E2D;&#x65AD;&#x5904;&#x7406;</h1>
+<p>&#x7531;&#x4E8E;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x6BD4;&#x8D77;&#x5185;&#x6838;&#x8FDB;&#x7A0B;&#x591A;&#x4E86;&#x4E00;&#x4E2A;&quot;&#x7528;&#x6237;&#x6808;&quot;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6BCF;&#x4E2A;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x4F1A;&#x6709;&#x4E24;&#x4E2A;&#x6808;&#xFF0C;&#x4E00;&#x4E2A;&#x5185;&#x6838;&#x6808;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x6808;&#xFF0C;&#x6240;&#x4EE5;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7684;&#x4EE3;&#x7801;<code>trapentry.S</code>&#x8981;&#x6709;&#x4E00;&#x4E9B;&#x5C0F;&#x53D8;&#x5316;&#x3002;&#x5173;&#x6CE8;&#x7528;&#x6237;&#x6001;&#x4EA7;&#x751F;&#x4E2D;&#x65AD;&#x65F6;&#xFF0C;&#x5185;&#x6838;&#x6808;&#x548C;&#x7528;&#x6237;&#x6808;&#x4E24;&#x4E2A;&#x6808;&#x9876;&#x6307;&#x9488;&#x7684;&#x79FB;&#x52A8;&#x3002;</p>
+<pre><code class="lang-asm"># kern/trap/trapentry.S
+
+#include <riscv.h>
+
+# &#x82E5;&#x5728;&#x4E2D;&#x65AD;&#x4E4B;&#x524D;&#x5904;&#x4E8E; U mode(&#x7528;&#x6237;&#x6001;)
+# &#x5219; sscratch &#x4FDD;&#x5B58;&#x7684;&#x662F;&#x5185;&#x6838;&#x6808;&#x5730;&#x5740;
+# &#x5426;&#x5219;&#x4E2D;&#x65AD;&#x4E4B;&#x524D;&#x5904;&#x4E8E; S mode(&#x5185;&#x6838;&#x6001;)&#xFF0C;sscratch &#x4FDD;&#x5B58;&#x7684;&#x662F; 0
+
+    .altmacro
+    .align 2
+    .macro SAVE_ALL
+    LOCAL _restore_kernel_sp
+    LOCAL _save_context
+
+    # If coming from userspace, preserve the user stack pointer and load
+    # the kernel stack pointer. If we came from the kernel, sscratch
+    # will contain 0, and we should continue on the current stack.
+    csrrw sp, sscratch, sp #&#x8FD9;&#x91CC;&#x4EA4;&#x6362;&#x4E86;sp&#x548C;sccratch&#x5BC4;&#x5B58;&#x5668;
+    #sp&#x4E3A;0&#xFF0C;&#x8BF4;&#x660E;&#x4E4B;&#x524D;&#x662F;&#x5185;&#x6838;&#x6001;&#xFF0C;&#x6211;&#x4EEC;&#x521A;&#x624D;&#x628A;&#x5185;&#x6838;&#x6808;&#x6307;&#x9488;&#x6362;&#x5230;&#x4E86;sscratch, &#x9700;&#x8981;&#x518D;&#x62FF;&#x56DE;&#x6765;
+    #sp&#x4E0D;&#x4E3A;0 &#x65F6;&#xFF0C;&#x8BF4;&#x660E;&#x4E4B;&#x524D;&#x662F;&#x7528;&#x6237;&#x6001;&#xFF0C;sp&#x91CC;&#x73B0;&#x5728;&#x5B58;&#x7684;&#x5C31;&#x662F;&#x5185;&#x6838;&#x6808;&#x6307;&#x9488;&#xFF0C;sscratch&#x91CC;&#x73B0;&#x5728;&#x662F;&#x7528;&#x6237;&#x6808;&#x6307;&#x9488;
+    #sp&#x4E0D;&#x4E3A;0&#xFF0C;&#x5C31;&#x8DF3;&#x5230;_save_context, &#x8DF3;&#x8FC7;_restore_kernel_sp&#x7684;&#x4EE3;&#x7801;
+    bnez sp, _save_context     
+
+_restore_kernel_sp:
+    csrr sp, sscratch #&#x521A;&#x624D;&#x628A;&#x5185;&#x6838;&#x6808;&#x6307;&#x9488;&#x6362;&#x5230;&#x4E86;sscratch, &#x9700;&#x8981;&#x518D;&#x62FF;&#x56DE;&#x6765;
+_save_context:
+    #&#x5206;&#x914D;&#x6808;&#x5E27;
+    addi sp, sp, -36 * REGBYTES 
+    # save x registers
+    STORE x0, 0*REGBYTES(sp)
+    STORE x1, 1*REGBYTES(sp)
+    STORE x3, 3*REGBYTES(sp)
+    STORE x4, 4*REGBYTES(sp)
+    STORE x5, 5*REGBYTES(sp)
+    STORE x6, 6*REGBYTES(sp)
+    STORE x7, 7*REGBYTES(sp)
+    STORE x8, 8*REGBYTES(sp)
+    STORE x9, 9*REGBYTES(sp)
+    STORE x10, 10*REGBYTES(sp)
+    STORE x11, 11*REGBYTES(sp)
+    STORE x12, 12*REGBYTES(sp)
+    STORE x13, 13*REGBYTES(sp)
+    STORE x14, 14*REGBYTES(sp)
+    STORE x15, 15*REGBYTES(sp)
+    STORE x16, 16*REGBYTES(sp)
+    STORE x17, 17*REGBYTES(sp)
+    STORE x18, 18*REGBYTES(sp)
+    STORE x19, 19*REGBYTES(sp)
+    STORE x20, 20*REGBYTES(sp)
+    STORE x21, 21*REGBYTES(sp)
+    STORE x22, 22*REGBYTES(sp)
+    STORE x23, 23*REGBYTES(sp)
+    STORE x24, 24*REGBYTES(sp)
+    STORE x25, 25*REGBYTES(sp)
+    STORE x26, 26*REGBYTES(sp)
+    STORE x27, 27*REGBYTES(sp)
+    STORE x28, 28*REGBYTES(sp)
+    STORE x29, 29*REGBYTES(sp)
+    STORE x30, 30*REGBYTES(sp)
+    STORE x31, 31*REGBYTES(sp)
+
+    # get sr, epc, tval, cause
+    # Set sscratch register to 0, so that if a recursive exception
+    # occurs, the exception vector knows it came from the kernel
+    #&#x5982;&#x679C;&#x4E4B;&#x524D;&#x662F;&#x7528;&#x6237;&#x6001;&#x4EA7;&#x751F;&#x7684;&#x4E2D;&#x65AD;&#xFF0C;&#x7528;&#x6237;&#x6808;&#x6307;&#x9488;&#x4ECE;sscratch&#x91CC;&#x632A;&#x5230;&#x4E86;s0&#x5BC4;&#x5B58;&#x5668;&#xFF0C; sscratch&#x6E05;&#x96F6;
+    csrrw s0, sscratch, x0
+    csrr s1, sstatus
+    csrr s2, sepc
+    csrr s3, 0x143 #stval
+    csrr s4, scause
+
+    STORE s0, 2*REGBYTES(sp) #&#x5982;&#x679C;&#x4E4B;&#x524D;&#x662F;&#x7528;&#x6237;&#x6001;&#x53D1;&#x751F;&#x4E2D;&#x65AD;&#xFF0C;&#x6B64;&#x65F6;&#x7528;&#x6237;&#x6808;&#x6307;&#x9488;&#x5B58;&#x5230;&#x4E86;&#x5185;&#x5B58;&#x91CC;
+    STORE s1, 32*REGBYTES(sp)
+    STORE s2, 33*REGBYTES(sp)
+    STORE s3, 34*REGBYTES(sp)
+    STORE s4, 35*REGBYTES(sp)
+    .endm
+
+    .macro RESTORE_ALL
+    LOCAL _save_kernel_sp
+    LOCAL _restore_context
+
+    LOAD s1, 32*REGBYTES(sp)
+    LOAD s2, 33*REGBYTES(sp)
+
+    andi s0, s1, SSTATUS_SPP #&#x53EF;&#x4EE5;&#x901A;&#x8FC7;SSTATUS_SPP&#x7684;&#x503C;&#x5224;&#x65AD;&#x4E4B;&#x524D;&#x662F;&#x7528;&#x6237;&#x6001;&#x8FD8;&#x662F;&#x5185;&#x6838;&#x6001;
+    bnez s0, _restore_context
+
+_save_kernel_sp:
+    # Save unwound kernel stack pointer in sscratch
+    addi s0, sp, 36 * REGBYTES
+    csrw sscratch, s0
+_restore_context:
+    csrw sstatus, s1
+    csrw sepc, s2
+
+    # restore x registers
+    LOAD x1, 1*REGBYTES(sp)
+    LOAD x3, 3*REGBYTES(sp)
+    LOAD x4, 4*REGBYTES(sp)
+    LOAD x5, 5*REGBYTES(sp)
+    LOAD x6, 6*REGBYTES(sp)
+    LOAD x7, 7*REGBYTES(sp)
+    LOAD x8, 8*REGBYTES(sp)
+    LOAD x9, 9*REGBYTES(sp)
+    LOAD x10, 10*REGBYTES(sp)
+    LOAD x11, 11*REGBYTES(sp)
+    LOAD x12, 12*REGBYTES(sp)
+    LOAD x13, 13*REGBYTES(sp)
+    LOAD x14, 14*REGBYTES(sp)
+    LOAD x15, 15*REGBYTES(sp)
+    LOAD x16, 16*REGBYTES(sp)
+    LOAD x17, 17*REGBYTES(sp)
+    LOAD x18, 18*REGBYTES(sp)
+    LOAD x19, 19*REGBYTES(sp)
+    LOAD x20, 20*REGBYTES(sp)
+    LOAD x21, 21*REGBYTES(sp)
+    LOAD x22, 22*REGBYTES(sp)
+    LOAD x23, 23*REGBYTES(sp)
+    LOAD x24, 24*REGBYTES(sp)
+    LOAD x25, 25*REGBYTES(sp)
+    LOAD x26, 26*REGBYTES(sp)
+    LOAD x27, 27*REGBYTES(sp)
+    LOAD x28, 28*REGBYTES(sp)
+    LOAD x29, 29*REGBYTES(sp)
+    LOAD x30, 30*REGBYTES(sp)
+    LOAD x31, 31*REGBYTES(sp)
+    # restore sp last
+    LOAD x2, 2*REGBYTES(sp) #&#x5982;&#x679C;&#x662F;&#x7528;&#x6237;&#x6001;&#x4EA7;&#x751F;&#x7684;&#x4E2D;&#x65AD;&#xFF0C;&#x6B64;&#x65F6;sp&#x6062;&#x590D;&#x4E3A;&#x7528;&#x6237;&#x6808;&#x6307;&#x9488;
+    .endm
+
+    .globl __alltraps
+__alltraps:
+    SAVE_ALL
+
+    move  a0, sp
+    jal trap
+    # sp should be the same as before &quot;jal trap&quot;
+
+    .globl __trapret
+__trapret:
+    RESTORE_ALL
+    # return from supervisor call
+    sret
+
+    .globl forkrets
+forkrets:
+    # set stack to this new process&apos;s trapframe
+    move sp, a0
+    j __trapret
+</riscv.h></code></pre>
+<p>&#x76EE;&#x524D;&#x4E3A;&#x6B62;&#x7684;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x5728;<a href="https://github.com/Liurunda/riscv64-ucore/tree/lab5/lab5" target="_blank">&#x8FD9;&#x91CC;</a>&#x627E;&#x5230;&#x3002;</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="2_syscall.html" class="navigation navigation-prev " aria-label="Previous page: system call!">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="structure.html" class="navigation navigation-next " aria-label="Next page: 项目组成和执行流">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"中断处理","level":"1.8.3","depth":2,"next":{"title":"项目组成和执行流","level":"1.8.4","depth":2,"path":"lab5/structure.md","ref":"lab5/structure.md","articles":[]},"previous":{"title":"system call!","level":"1.8.2","depth":2,"path":"lab5/2_syscall.md","ref":"lab5/2_syscall.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{"maxIndexSize":1000000},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"lab5/3_trap.md","mtime":"2021-03-12T01:33:10.453Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-03-13T13:17:09.043Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,1405 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>system call! · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="3_trap.html" />
+    
+    
+    <link rel="prev" href="1_user.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    欢迎来到ucore step-by-step的世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../lab0/intro.html">
+            
+                <a href="../lab0/intro.html">
+            
+                    
+                    lab0: 预备起
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../lab0/1_history.html">
+            
+                <a href="../lab0/1_history.html">
+            
+                    
+                    溯源: ucore的历史
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../lab0/2_overview.html">
+            
+                <a href="../lab0/2_overview.html">
+            
+                    
+                    概览: 指导书的结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../lab0/3_startdash.html">
+            
+                <a href="../lab0/3_startdash.html">
+            
+                    
+                    开搞: 实验环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../lab0.5/intro.html">
+            
+                <a href="../lab0.5/intro.html">
+            
+                    
+                    lab0.5: 比麻雀更小的麻雀(最小可执行内核)
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../lab0.5/1_layout.html">
+            
+                <a href="../lab0.5/1_layout.html">
+            
+                    
+                    内存布局，OpenSBI，elf和bin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../lab0.5/2_linkerscript.html">
+            
+                <a href="../lab0.5/2_linkerscript.html">
+            
+                    
+                    链接脚本和入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../lab0.5/3_kern_init.html">
+            
+                <a href="../lab0.5/3_kern_init.html">
+            
+                    
+                    "真正的"入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../lab0.5/4_sbi_io.html">
+            
+                <a href="../lab0.5/4_sbi_io.html">
+            
+                    
+                    从SBI到stdio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../lab0.5/5_makeit.html">
+            
+                <a href="../lab0.5/5_makeit.html">
+            
+                    
+                    Just make it
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../lab0.5/structure.html">
+            
+                <a href="../lab0.5/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../lab1/intro.html">
+            
+                <a href="../lab1/intro.html">
+            
+                    
+                    lab1: 断, 都可以断
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../lab1/1_trapentry.html">
+            
+                <a href="../lab1/1_trapentry.html">
+            
+                    
+                    掉进兔子洞(中断入口点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../lab1/2_trap.html">
+            
+                <a href="../lab1/2_trap.html">
+            
+                    
+                    中断处理程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../lab1/3_clock.html">
+            
+                <a href="../lab1/3_clock.html">
+            
+                    
+                    滴答滴答(时钟中断)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../lab1/structure.html">
+            
+                <a href="../lab1/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../lab2/intro.html">
+            
+                <a href="../lab2/intro.html">
+            
+                    
+                    lab2: 物理内存和页表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../lab2/1_init.html">
+            
+                <a href="../lab2/1_init.html">
+            
+                    
+                    内核初始映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../lab2/2_physical.html">
+            
+                <a href="../lab2/2_physical.html">
+            
+                    
+                    物理内存管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../lab2/3_alloc.html">
+            
+                <a href="../lab2/3_alloc.html">
+            
+                    
+                    页面分配算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../lab2/structure.html">
+            
+                <a href="../lab2/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../lab3/intro.html">
+            
+                <a href="../lab3/intro.html">
+            
+                    
+                    lab3: 缺页异常和页面置换
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../lab3/1_pagefault.html">
+            
+                <a href="../lab3/1_pagefault.html">
+            
+                    
+                    扫清外围
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../lab3/2_pagetable.html">
+            
+                <a href="../lab3/2_pagetable.html">
+            
+                    
+                    使用多级页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../lab3/3_swap.html">
+            
+                <a href="../lab3/3_swap.html">
+            
+                    
+                    页面置换机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../lab3/4_fifo.html">
+            
+                <a href="../lab3/4_fifo.html">
+            
+                    
+                    FIFO置换算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../lab3/structure.html">
+            
+                <a href="../lab3/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../lab4/intro.html">
+            
+                <a href="../lab4/intro.html">
+            
+                    
+                    lab4: 进程管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../lab4/1_process.html">
+            
+                <a href="../lab4/1_process.html">
+            
+                    
+                    进程与线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../lab4/2_struct.html">
+            
+                <a href="../lab4/2_struct.html">
+            
+                    
+                    相关数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../lab4/3_init.html">
+            
+                <a href="../lab4/3_init.html">
+            
+                    
+                    进程模块初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../lab4/4_switch.html">
+            
+                <a href="../lab4/4_switch.html">
+            
+                    
+                    进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../lab4/structure.html">
+            
+                <a href="../lab4/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="intro.html">
+            
+                <a href="intro.html">
+            
+                    
+                    lab5: 用户程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="1_user.html">
+            
+                <a href="1_user.html">
+            
+                    
+                    用户程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.8.2" data-path="2_syscall.html">
+            
+                <a href="2_syscall.html">
+            
+                    
+                    system call!
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="3_trap.html">
+            
+                <a href="3_trap.html">
+            
+                    
+                    中断处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="structure.html">
+            
+                <a href="structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../lab6/intro.html">
+            
+                <a href="../lab6/intro.html">
+            
+                    
+                    lab6: 进程调度
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../lab6/1_switch.html">
+            
+                <a href="../lab6/1_switch.html">
+            
+                    
+                    再次认识进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../lab6/2_schedule.html">
+            
+                <a href="../lab6/2_schedule.html">
+            
+                    
+                    调度算法框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../lab6/structure.html">
+            
+                <a href="../lab6/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../lab7/intro.html">
+            
+                <a href="../lab7/intro.html">
+            
+                    
+                    lab7: 同步互斥
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../lab7/1_concept.html">
+            
+                <a href="../lab7/1_concept.html">
+            
+                    
+                    同步互斥的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../lab7/2_semaphore.html">
+            
+                <a href="../lab7/2_semaphore.html">
+            
+                    
+                    信号量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../lab7/3_monitor.html">
+            
+                <a href="../lab7/3_monitor.html">
+            
+                    
+                    条件变量与管程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../lab7/structure.html">
+            
+                <a href="../lab7/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../lab8/intro.html">
+            
+                <a href="../lab8/intro.html">
+            
+                    
+                    lab8: 文件系统
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../lab8/3_vfs.html">
+            
+                <a href="../lab8/3_vfs.html">
+            
+                    
+                    文件系统抽象层VFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../lab8/1_sfs.html">
+            
+                <a href="../lab8/1_sfs.html">
+            
+                    
+                    硬盘文件系统SFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../lab8/2_device.html">
+            
+                <a href="../lab8/2_device.html">
+            
+                    
+                    设备即文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../lab8/4_shell.html">
+            
+                <a href="../lab8/4_shell.html">
+            
+                    
+                    从zhong duan 到 zhong duan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../lab8/structure.html">
+            
+                <a href="../lab8/structure.html">
+            
+                    
+                    项目组成和执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../excercise/intro.html">
+            
+                <a href="../excercise/intro.html">
+            
+                    
+                    练习题
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../excercise/1_lab1.html">
+            
+                <a href="../excercise/1_lab1.html">
+            
+                    
+                    lab1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../excercise/2_lab2.html">
+            
+                <a href="../excercise/2_lab2.html">
+            
+                    
+                    lab2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../excercise/3_lab3.html">
+            
+                <a href="../excercise/3_lab3.html">
+            
+                    
+                    lab3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../excercise/4_lab4.html">
+            
+                <a href="../excercise/4_lab4.html">
+            
+                    
+                    lab4
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../excercise/5_lab5.html">
+            
+                <a href="../excercise/5_lab5.html">
+            
+                    
+                    lab5
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.6" data-path="../excercise/6_lab6.html">
+            
+                <a href="../excercise/6_lab6.html">
+            
+                    
+                    lab6
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.7" data-path="../excercise/7_lab7.html">
+            
+                <a href="../excercise/7_lab7.html">
+            
+                    
+                    lab7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.8" data-path="../excercise/8_lab8.html">
+            
+                <a href="../excercise/8_lab8.html">
+            
+                    
+                    lab8
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../appendix/intro.html">
+            
+                <a href="../appendix/intro.html">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../appendix/1_makefile.html">
+            
+                <a href="../appendix/1_makefile.html">
+            
+                    
+                    makefile
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >system call!</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="lab5-2n-&#x7CFB;&#x7EDF;&#x8C03;&#x7528;">lab5 2/n &#x7CFB;&#x7EDF;&#x8C03;&#x7528;</h2>
+<p>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x662F;&#x7528;&#x6237;&#x6001;(U mode)&#x7684;&#x7A0B;&#x5E8F;&#x83B7;&#x53D6;&#x5185;&#x6838;&#x6001;&#xFF08;S mode)&#x670D;&#x52A1;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5728;&#x7528;&#x6237;&#x6001;&#x548C;&#x5185;&#x6838;&#x6001;&#x90FD;&#x52A0;&#x5165;&#x5BF9;&#x5E94;&#x7684;&#x652F;&#x6301;&#x548C;&#x5904;&#x7406;&#x3002;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A;&#x7528;&#x6237;&#x6001;&#x53EA;&#x662F;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x8C03;&#x7528;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x771F;&#x6B63;&#x7684;&#x5904;&#x7406;&#x90FD;&#x5728;&#x5185;&#x6838;&#x6001;&#x8FDB;&#x884C;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x5728;&#x5934;&#x6587;&#x4EF6;&#x91CC;&#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x7F16;&#x53F7;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// libs/unistd.h</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">ifndef</span> __LIBS_UNISTD_H__</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> __LIBS_UNISTD_H__</span>
+
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> T_SYSCALL           <span class="hljs-number">0x80</span></span>
+
+<span class="hljs-comment">/* syscall number */</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_exit            <span class="hljs-number">1</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_fork            <span class="hljs-number">2</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_wait            <span class="hljs-number">3</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_exec            <span class="hljs-number">4</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_clone           <span class="hljs-number">5</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_yield           <span class="hljs-number">10</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_sleep           <span class="hljs-number">11</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_kill            <span class="hljs-number">12</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_gettime         <span class="hljs-number">17</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_getpid          <span class="hljs-number">18</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_brk             <span class="hljs-number">19</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_mmap            <span class="hljs-number">20</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_munmap          <span class="hljs-number">21</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_shmem           <span class="hljs-number">22</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_putc            <span class="hljs-number">30</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> SYS_pgdir           <span class="hljs-number">31</span></span>
+
+<span class="hljs-comment">/* SYS_fork flags */</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> CLONE_VM            <span class="hljs-number">0x00000100</span>  <span class="hljs-comment">// set if VM shared between processes</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> CLONE_THREAD        <span class="hljs-number">0x00000200</span>  <span class="hljs-comment">// thread group</span></span>
+
+<span class="hljs-preprocessor">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* !__LIBS_UNISTD_H__ */</span></span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x6CE8;&#x610F;&#x5728;&#x7528;&#x6237;&#x6001;&#x8FDB;&#x884C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x6838;&#x5FC3;&#x64CD;&#x4F5C;&#x662F;&#xFF0C;&#x901A;&#x8FC7;&#x5185;&#x8054;&#x6C47;&#x7F16;&#x8FDB;&#x884C;<code>ecall</code>&#x73AF;&#x5883;&#x8C03;&#x7528;&#x3002;&#x8FD9;&#x5C06;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;trap, &#x8FDB;&#x5165;S mode&#x8FDB;&#x884C;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x3002;</p>
+<pre><code class="lang-c">// user/libs/syscall.c
+#include &lt;defs.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;syscall.h&gt;
+#define MAX_ARGS            5
+static inline int syscall(int num, ...) {
+    //va_list, va_start, va_arg&#x90FD;&#x662F;C&#x8BED;&#x8A00;&#x5904;&#x7406;&#x53C2;&#x6570;&#x4E2A;&#x6570;&#x4E0D;&#x5B9A;&#x7684;&#x51FD;&#x6570;&#x7684;&#x5B8F;
+    //&#x5728;stdarg.h&#x91CC;&#x5B9A;&#x4E49;
+    va_list ap; //ap: &#x53C2;&#x6570;&#x5217;&#x8868;(&#x6B64;&#x65F6;&#x672A;&#x521D;&#x59CB;&#x5316;)
+    va_start(ap, num); //&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;&#x5217;&#x8868;, &#x4ECE;num&#x5F00;&#x59CB;
+    //First, va_start initializes the list of variable arguments as a va_list.
+    uint64_t a[MAX_ARGS];
+    int i, ret;
+    for (i = 0; i &lt; MAX_ARGS; i ++) { //&#x628A;&#x53C2;&#x6570;&#x4F9D;&#x6B21;&#x53D6;&#x51FA;
+           /*Subsequent executions of va_arg yield the values of the additional arguments 
+           in the same order as passed to the function.*/
+        a[i] = va_arg(ap, uint64_t);
+    }
+    va_end(ap); //Finally, va_end shall be executed before the function returns.
+    asm volatile (
+        &quot;ld a0, %1\n&quot;
+        &quot;ld a1, %2\n&quot;
+        &quot;ld a2, %3\n&quot;
+        &quot;ld a3, %4\n&quot;
+        &quot;ld a4, %5\n&quot;
+        &quot;ld a5, %6\n&quot;
+        &quot;ecall\n&quot;
+        &quot;sd a0, %0&quot;
+        : &quot;=m&quot; (ret)
+        : &quot;m&quot;(num), &quot;m&quot;(a[0]), &quot;m&quot;(a[1]), &quot;m&quot;(a[2]), &quot;m&quot;(a[3]), &quot;m&quot;(a[4])
+        :&quot;memory&quot;);
+    //num&#x5B58;&#x5230;a0&#x5BC4;&#x5B58;&#x5668;&#xFF0C; a[0]&#x5B58;&#x5230;a1&#x5BC4;&#x5B58;&#x5668;
+    //ecall&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x5B58;&#x5230;ret
+    return ret;
+}
+int sys_exit(int error_code) { return syscall(SYS_exit, error_code); }
+int sys_fork(void) { return syscall(SYS_fork); }
+int sys_wait(int pid, int *store) { return syscall(SYS_wait, pid, store); }
+int sys_yield(void) { return syscall(SYS_yield);}
+int sys_kill(int pid) { return syscall(SYS_kill, pid); }
+int sys_getpid(void) { return syscall(SYS_getpid); }
+int sys_putc(int c) { return syscall(SYS_putc, c); }
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x4E0B;&#x9762;&#x770B;&#x770B;trap.c&#x662F;&#x5982;&#x4F55;&#x8F6C;&#x53D1;&#x8FD9;&#x4E2A;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/trap/trap.c</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">exception_handler</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> trapframe *tf)</span> </span>{
+    <span class="hljs-keyword">int</span> ret;
+    <span class="hljs-keyword">switch</span> (tf-&gt;cause) { <span class="hljs-comment">//&#x901A;&#x8FC7;&#x4E2D;&#x65AD;&#x5E27;&#x91CC; scause&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x6570;&#x503C;&#xFF0C;&#x5224;&#x65AD;&#x51FA;&#x5F53;&#x524D;&#x662F;&#x6765;&#x81EA;USER_ECALL&#x7684;&#x5F02;&#x5E38;</span>
+        <span class="hljs-keyword">case</span> CAUSE_USER_ECALL:
+            <span class="hljs-comment">//cprintf(&quot;Environment call from U-mode\n&quot;);</span>
+            tf-&gt;epc += <span class="hljs-number">4</span>; 
+            <span class="hljs-comment">//sepc&#x5BC4;&#x5B58;&#x5668;&#x662F;&#x4EA7;&#x751F;&#x5F02;&#x5E38;&#x7684;&#x6307;&#x4EE4;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5728;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x7ED3;&#x675F;&#x540E;&#xFF0C;&#x4F1A;&#x56DE;&#x5230;sepc&#x7684;&#x4F4D;&#x7F6E;&#x7EE7;&#x7EED;&#x6267;&#x884C;</span>
+            <span class="hljs-comment">//&#x5BF9;&#x4E8E;ecall, &#x6211;&#x4EEC;&#x5E0C;&#x671B;sepc&#x5BC4;&#x5B58;&#x5668;&#x8981;&#x6307;&#x5411;&#x4EA7;&#x751F;&#x5F02;&#x5E38;&#x7684;&#x6307;&#x4EE4;(ecall)&#x7684;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;</span>
+            <span class="hljs-comment">//&#x5426;&#x5219;&#x5C31;&#x4F1A;&#x56DE;&#x5230;ecall&#x6267;&#x884C;&#x518D;&#x6267;&#x884C;&#x4E00;&#x6B21;ecall, &#x65E0;&#x9650;&#x5FAA;&#x73AF;</span>
+            syscall();<span class="hljs-comment">// &#x8FDB;&#x884C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x5904;&#x7406;</span>
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-comment">/*other cases .... */</span>
+    }
+}
+<span class="hljs-comment">// kern/syscall/syscall.c</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;proc.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;syscall.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;trap.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pmm.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;assert.h&gt;</span></span>
+<span class="hljs-comment">//&#x8FD9;&#x91CC;&#x628A;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8FDB;&#x4E00;&#x6B65;&#x8F6C;&#x53D1;&#x7ED9;proc.c&#x7684;do_exit(), do_fork()&#x7B49;&#x51FD;&#x6570;</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sys_exit</span><span class="hljs-params">(uint64_t arg[])</span> </span>{
+    <span class="hljs-keyword">int</span> error_code = (<span class="hljs-keyword">int</span>)arg[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">return</span> do_exit(error_code);
+}
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sys_fork</span><span class="hljs-params">(uint64_t arg[])</span> </span>{
+    <span class="hljs-keyword">struct</span> trapframe *tf = current-&gt;tf;
+    <span class="hljs-keyword">uintptr_t</span> <span class="hljs-built_in">stack</span> = tf-&gt;gpr.sp;
+    <span class="hljs-keyword">return</span> do_fork(<span class="hljs-number">0</span>, <span class="hljs-built_in">stack</span>, tf);
+}
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sys_wait</span><span class="hljs-params">(uint64_t arg[])</span> </span>{
+    <span class="hljs-keyword">int</span> pid = (<span class="hljs-keyword">int</span>)arg[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">int</span> *store = (<span class="hljs-keyword">int</span> *)arg[<span class="hljs-number">1</span>];
+    <span class="hljs-keyword">return</span> do_wait(pid, store);
+}
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sys_exec</span><span class="hljs-params">(uint64_t arg[])</span> </span>{
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name = (<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *)arg[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">size_t</span> len = (<span class="hljs-keyword">size_t</span>)arg[<span class="hljs-number">1</span>];
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *binary = (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *)arg[<span class="hljs-number">2</span>];
+    <span class="hljs-keyword">size_t</span> size = (<span class="hljs-keyword">size_t</span>)arg[<span class="hljs-number">3</span>];
+    <span class="hljs-comment">//&#x7528;&#x6237;&#x6001;&#x8C03;&#x7528;&#x7684;exec(), &#x5F52;&#x6839;&#x7ED3;&#x5E95;&#x662F;do_execve()</span>
+    <span class="hljs-keyword">return</span> do_execve(name, len, binary, size);
+}
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sys_yield</span><span class="hljs-params">(uint64_t arg[])</span> </span>{
+    <span class="hljs-keyword">return</span> do_yield();
+}
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sys_kill</span><span class="hljs-params">(uint64_t arg[])</span> </span>{
+    <span class="hljs-keyword">int</span> pid = (<span class="hljs-keyword">int</span>)arg[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">return</span> do_kill(pid);
+}
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sys_getpid</span><span class="hljs-params">(uint64_t arg[])</span> </span>{
+    <span class="hljs-keyword">return</span> current-&gt;pid;
+}
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sys_putc</span><span class="hljs-params">(uint64_t arg[])</span> </span>{
+    <span class="hljs-keyword">int</span> c = (<span class="hljs-keyword">int</span>)arg[<span class="hljs-number">0</span>];
+    cputchar(c);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+<span class="hljs-comment">//&#x8FD9;&#x91CC;&#x5B9A;&#x4E49;&#x4E86;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x6570;&#x7EC4;syscalls, &#x628A;&#x6BCF;&#x4E2A;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7F16;&#x53F7;&#x7684;&#x4E0B;&#x6807;&#x4E0A;&#x521D;&#x59CB;&#x5316;&#x4E3A;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-title">int</span> <span class="hljs-params">(*syscalls[])</span><span class="hljs-params">(uint64_t arg[])</span> </span>= {
+    [SYS_exit]              sys_exit,
+    [SYS_fork]              sys_fork,
+    [SYS_wait]              sys_wait,
+    [SYS_exec]              sys_exec,
+    [SYS_yield]             sys_yield,
+    [SYS_kill]              sys_kill,
+    [SYS_getpid]            sys_getpid,
+    [SYS_putc]              sys_putc,
+};
+
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> NUM_SYSCALLS        ((sizeof(syscalls)) / (sizeof(syscalls[<span class="hljs-number">0</span>])))</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">syscall</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-keyword">struct</span> trapframe *tf = current-&gt;tf;
+    <span class="hljs-keyword">uint64_t</span> arg[<span class="hljs-number">5</span>];
+    <span class="hljs-keyword">int</span> num = tf-&gt;gpr.a0;<span class="hljs-comment">//a0&#x5BC4;&#x5B58;&#x5668;&#x4FDD;&#x5B58;&#x4E86;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7F16;&#x53F7;</span>
+    <span class="hljs-keyword">if</span> (num &gt;= <span class="hljs-number">0</span> &amp;&amp; num &lt; NUM_SYSCALLS) {<span class="hljs-comment">//&#x9632;&#x6B62;syscalls[num]&#x4E0B;&#x6807;&#x8D8A;&#x754C;</span>
+        <span class="hljs-keyword">if</span> (syscalls[num] != <span class="hljs-literal">NULL</span>) {
+            arg[<span class="hljs-number">0</span>] = tf-&gt;gpr.a1;
+            arg[<span class="hljs-number">1</span>] = tf-&gt;gpr.a2;
+            arg[<span class="hljs-number">2</span>] = tf-&gt;gpr.a3;
+            arg[<span class="hljs-number">3</span>] = tf-&gt;gpr.a4;
+            arg[<span class="hljs-number">4</span>] = tf-&gt;gpr.a5;
+            tf-&gt;gpr.a0 = syscalls[num](arg); 
+            <span class="hljs-comment">//&#x628A;&#x5BC4;&#x5B58;&#x5668;&#x91CC;&#x7684;&#x53C2;&#x6570;&#x53D6;&#x51FA;&#x6765;&#xFF0C;&#x8F6C;&#x53D1;&#x7ED9;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7F16;&#x53F7;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x5904;&#x7406;</span>
+            <span class="hljs-keyword">return</span> ;
+        }
+    }
+    <span class="hljs-comment">//&#x5982;&#x679C;&#x6267;&#x884C;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x8BF4;&#x660E;&#x4F20;&#x5165;&#x7684;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7F16;&#x53F7;&#x8FD8;&#x6CA1;&#x6709;&#x88AB;&#x5B9E;&#x73B0;&#xFF0C;&#x5C31;&#x5D29;&#x6389;&#x4E86;&#x3002;</span>
+    print_trapframe(tf);
+    panic(<span class="hljs-string">&quot;undefined syscall %d, pid = %d, name = %s.\n&quot;</span>,
+            num, current-&gt;pid, current-&gt;name);
+}
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x8F6C;&#x53D1;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#x5C31;&#x662F;&#x5728;<code>do_exit(), do_execve()</code>&#x7B49;&#x51FD;&#x6570;&#x4E2D;&#x8FDB;&#x884C;&#x5177;&#x4F53;&#x5904;&#x7406;&#x4E86;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x770B;&#x770B;<code>do_execve()</code>&#x51FD;&#x6570;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/mm/vmm.c</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">user_mem_check</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> mm_struct *mm, uintptr_t addr, size_t len, <span class="hljs-keyword">bool</span> write)</span> </span>{
+    <span class="hljs-comment">//&#x68C0;&#x67E5;&#x4ECE;addr&#x5F00;&#x59CB;&#x957F;&#x4E3A;len&#x7684;&#x4E00;&#x6BB5;&#x5185;&#x5B58;&#x80FD;&#x5426;&#x88AB;&#x7528;&#x6237;&#x6001;&#x7A0B;&#x5E8F;&#x8BBF;&#x95EE;</span>
+    <span class="hljs-keyword">if</span> (mm != <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-keyword">if</span> (!USER_ACCESS(addr, addr + len)) {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">struct</span> vma_struct *vma;
+        <span class="hljs-keyword">uintptr_t</span> start = addr, end = addr + len;
+        <span class="hljs-keyword">while</span> (start &lt; end) {
+            <span class="hljs-keyword">if</span> ((vma = find_vma(mm, start)) == <span class="hljs-literal">NULL</span> || start &lt; vma-&gt;vm_start) {
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+            }
+            <span class="hljs-keyword">if</span> (!(vma-&gt;vm_flags &amp; ((write) ? VM_WRITE : VM_READ))) {
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+            }
+            <span class="hljs-keyword">if</span> (write &amp;&amp; (vma-&gt;vm_flags &amp; VM_STACK)) {
+                <span class="hljs-keyword">if</span> (start &lt; vma-&gt;vm_start + PGSIZE) { <span class="hljs-comment">//check stack start &amp; size</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+                }
+            }
+            start = vma-&gt;vm_end;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">return</span> KERN_ACCESS(addr, addr + len);
+}
+<span class="hljs-comment">// kern/process/proc.c</span>
+<span class="hljs-comment">// do_execve - call exit_mmap(mm)&amp;put_pgdir(mm) to reclaim memory space of current process</span>
+<span class="hljs-comment">//           - call load_icode to setup new memory space accroding binary prog.</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">do_execve</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name, size_t len, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *binary, size_t size)</span> </span>{
+    <span class="hljs-keyword">struct</span> mm_struct *mm = current-&gt;mm;
+    <span class="hljs-keyword">if</span> (!user_mem_check(mm, (<span class="hljs-keyword">uintptr_t</span>)name, len, <span class="hljs-number">0</span>)) { <span class="hljs-comment">//&#x68C0;&#x67E5;name&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x80FD;&#x5426;&#x88AB;&#x8BBF;&#x95EE;</span>
+        <span class="hljs-keyword">return</span> -E_INVAL;
+    }
+    <span class="hljs-keyword">if</span> (len &gt; PROC_NAME_LEN) { <span class="hljs-comment">//&#x8FDB;&#x7A0B;&#x540D;&#x5B57;&#x7684;&#x957F;&#x5EA6;&#x6709;&#x4E0A;&#x9650; PROC_NAME_LEN&#xFF0C;&#x5728;proc.h&#x5B9A;&#x4E49;</span>
+        len = PROC_NAME_LEN;
+    }
+    <span class="hljs-keyword">char</span> local_name[PROC_NAME_LEN + <span class="hljs-number">1</span>];
+    <span class="hljs-built_in">memset</span>(local_name, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(local_name));
+    <span class="hljs-built_in">memcpy</span>(local_name, name, len);
+
+    <span class="hljs-keyword">if</span> (mm != <span class="hljs-literal">NULL</span>) {
+        cputs(<span class="hljs-string">&quot;mm != NULL&quot;</span>);
+        lcr3(boot_cr3);
+        <span class="hljs-keyword">if</span> (mm_count_dec(mm) == <span class="hljs-number">0</span>) {
+            exit_mmap(mm);
+            put_pgdir(mm);
+            mm_destroy(mm);<span class="hljs-comment">//&#x628A;&#x8FDB;&#x7A0B;&#x5F53;&#x524D;&#x5360;&#x7528;&#x7684;&#x5185;&#x5B58;&#x91CA;&#x653E;&#xFF0C;&#x4E4B;&#x540E;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x5185;&#x5B58;</span>
+        }
+        current-&gt;mm = <span class="hljs-literal">NULL</span>;
+    }
+    <span class="hljs-comment">//&#x628A;&#x65B0;&#x7684;&#x7A0B;&#x5E8F;&#x52A0;&#x8F7D;&#x5230;&#x5F53;&#x524D;&#x8FDB;&#x7A0B;&#x91CC;&#x7684;&#x5DE5;&#x4F5C;&#x90FD;&#x5728;load_icode()&#x51FD;&#x6570;&#x91CC;&#x5B8C;&#x6210;</span>
+    <span class="hljs-keyword">int</span> ret;
+    <span class="hljs-keyword">if</span> ((ret = load_icode(binary, size)) != <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">goto</span> execve_exit;<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x4E0D;&#x4E3A;0&#xFF0C;&#x5219;&#x52A0;&#x8F7D;&#x5931;&#x8D25;</span>
+    }
+    set_proc_name(current, local_name);
+    <span class="hljs-comment">//&#x5982;&#x679C;set_proc_name&#x7684;&#x5B9E;&#x73B0;&#x4E0D;&#x53D8;, &#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;set_proc_name(current, name)?</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+execve_exit:
+    do_exit(ret);
+    panic(<span class="hljs-string">&quot;already exit: %e.\n&quot;</span>, ret);
+}
+</code></pre>
+<p>&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5982;&#x4F55;&#x5B9E;&#x73B0;<code>kernel_execve()</code>&#x51FD;&#x6570;&#xFF1F;</p>
+<p>&#x80FD;&#x5426;&#x76F4;&#x63A5;&#x8C03;&#x7528;<code>do_execve()</code>?</p>
+<pre><code class="lang-c"><span class="hljs-comment">// kern/process/proc.c</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">kernel_execve</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *binary, size_t size)</span> </span>{
+    <span class="hljs-keyword">int64_t</span> ret=<span class="hljs-number">0</span>, len = <span class="hljs-built_in">strlen</span>(name);
+    ret = do_execve(name, len, binary, size);
+    cprintf(<span class="hljs-string">&quot;ret = %d\n&quot;</span>, ret);
+    <span class="hljs-keyword">return</span> ret;
+}
+</code></pre>
+<p>&#x5F88;&#x4E0D;&#x5E78;&#x3002;&#x8FD9;&#x4E48;&#x505A;&#x884C;&#x4E0D;&#x901A;&#x3002;<code>do_execve()</code> <code>load_icode()</code>&#x91CC;&#x9762;&#x53EA;&#x662F;&#x6784;&#x5EFA;&#x4E86;&#x7528;&#x6237;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x4F46;&#x662F;&#x5E76;&#x6CA1;&#x6709;&#x5B8C;&#x6210;&#x5207;&#x6362;&#x3002;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;&#x5B9E;&#x9645;&#x4E0A;&#x8981;&#x501F;&#x52A9;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7684;&#x8FD4;&#x56DE;&#x6765;&#x5B8C;&#x6210;&#x3002;&#x76F4;&#x63A5;&#x8C03;&#x7528;<code>do_execve()</code>&#x662F;&#x65E0;&#x6CD5;&#x5B8C;&#x6210;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;&#x7684;&#x3002;&#x5982;&#x679C;&#x662F;&#x5728;&#x7528;&#x6237;&#x6001;&#x8C03;&#x7528;<code>exec()</code>, &#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;<code>ecall</code>&#x4EA7;&#x751F;&#x7684;&#x4E2D;&#x65AD;&#x8FD4;&#x56DE;&#x65F6;&#xFF0C; &#x5C31;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;&#x3002;</p>
+<p>&#x7531;&#x4E8E;&#x76EE;&#x524D;&#x6211;&#x4EEC;&#x5728;S mode&#x4E0B;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;<code>ecall</code>&#x6765;&#x4EA7;&#x751F;&#x4E2D;&#x65AD;&#x3002;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x91C7;&#x53D6;&#x4E00;&#x4E2A;&#x53D6;&#x5DE7;&#x7684;&#x529E;&#x6CD5;&#xFF0C;&#x7528;<code>ebreak</code>&#x4EA7;&#x751F;&#x65AD;&#x70B9;&#x4E2D;&#x65AD;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;<code>a7</code>&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x4E3A;10&#x8BF4;&#x660E;&#x8FD9;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x7684;&#x65AD;&#x70B9;&#x4E2D;&#x65AD;&#xFF0C;&#x800C;&#x662F;&#x8981;&#x8F6C;&#x53D1;&#x5230;<code>syscall()</code>, &#x8FD9;&#x6837;&#x7528;&#x4E00;&#x4E2A;&#x4E0D;&#x662F;&#x7279;&#x522B;&#x4F18;&#x96C5;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x5728;&#x5185;&#x6838;&#x6001;&#x4F7F;&#x7528;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x3002;</p>
+<pre><code class="lang-c">// kern/process/proc.c
+// kernel_execve - do SYS_exec syscall to exec a user program called by user_main kernel_thread
+static int kernel_execve(const char *name, unsigned char *binary, size_t size) {
+    int64_t ret=0, len = strlen(name);
+    asm volatile(
+        &quot;li a0, %1\n&quot;
+        &quot;lw a1, %2\n&quot;
+        &quot;lw a2, %3\n&quot;
+        &quot;lw a3, %4\n&quot;
+        &quot;lw a4, %5\n&quot;
+        &quot;li a7, 10\n&quot;
+        &quot;ebreak\n&quot;
+        &quot;sw a0, %0\n&quot;
+        : &quot;=m&quot;(ret)
+        : &quot;i&quot;(SYS_exec), &quot;m&quot;(name), &quot;m&quot;(len), &quot;m&quot;(binary), &quot;m&quot;(size)
+        : &quot;memory&quot;); //&#x8FD9;&#x91CC;&#x5185;&#x8054;&#x6C47;&#x7F16;&#x7684;&#x683C;&#x5F0F;&#xFF0C;&#x548C;&#x7528;&#x6237;&#x6001;&#x8C03;&#x7528;ecall&#x7684;&#x683C;&#x5F0F;&#x7C7B;&#x4F3C;&#xFF0C;&#x53EA;&#x662F;ecall&#x6362;&#x6210;&#x4E86;ebreak
+    cprintf(&quot;ret = %d\n&quot;, ret);
+    return ret;
+}
+// kern/trap/trap.c
+void exception_handler(struct trapframe *tf) {
+    int ret;
+    switch (tf-&gt;cause) {
+        case CAUSE_BREAKPOINT:
+            cprintf(&quot;Breakpoint\n&quot;);
+            if(tf-&gt;gpr.a7 == 10){
+                tf-&gt;epc += 4; //&#x6CE8;&#x610F;&#x8FD4;&#x56DE;&#x65F6;&#x8981;&#x6267;&#x884C;ebreak&#x7684;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;
+                syscall();
+            }
+            break;
+          /* other cases ... */
+    }
+}
+</code></pre>
+<p>&#x6CE8;&#x610F;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8BA9;CPU&#x8FDB;&#x5165;U mode&#x6267;&#x884C;<code>do_execve()</code>&#x52A0;&#x8F7D;&#x7684;&#x7528;&#x6237;&#x7A0B;&#x5E8F;&#x3002;&#x8FDB;&#x884C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;<code>sys_exec</code>&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x5728;trap&#x8FD4;&#x56DE;&#x7684;&#x65F6;&#x5019;&#x8C03;&#x7528;&#x4E86;<code>sret</code>&#x6307;&#x4EE4;&#xFF0C;&#x8FD9;&#x65F6;&#x53EA;&#x8981;<code>sstatus</code>&#x5BC4;&#x5B58;&#x5668;&#x7684;<code>SPP</code>&#x4E8C;&#x8FDB;&#x5236;&#x4F4D;&#x4E3A;0&#xFF0C;&#x5C31;&#x4F1A;&#x5207;&#x6362;&#x5230;U mode&#xFF0C;&#x4F46;<code>SPP</code>&#x5B58;&#x50A8;&#x7684;&#x662F;&#x201C;&#x8FDB;&#x5165;trap&#x4E4B;&#x524D;&#x6765;&#x81EA;&#x4EC0;&#x4E48;&#x7279;&#x6743;&#x7EA7;&#x201D;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;ebreak&#x4E4B;&#x540E;<code>SPP</code>&#x7684;&#x6570;&#x503C;&#x4E3A;1&#xFF0C;sret&#x4E4B;&#x540E;&#x4F1A;&#x56DE;&#x5230;S mode&#x5728;&#x5185;&#x6838;&#x6001;&#x6267;&#x884C;&#x7528;&#x6237;&#x7A0B;&#x5E8F;&#x3002;&#x6240;&#x4EE5;<code>load_icode()</code>&#x51FD;&#x6570;&#x5728;&#x6784;&#x9020;&#x65B0;&#x8FDB;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x628A;<code>SSTATUS_SPP</code>&#x8BBE;&#x7F6E;&#x4E3A;0&#xFF0C;&#x4F7F;&#x5F97;<code>sret</code>&#x7684;&#x65F6;&#x5019;&#x80FD;&#x56DE;&#x5230;U mode&#x3002;</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="1_user.html" class="navigation navigation-prev " aria-label="Previous page: 用户程序">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="3_trap.html" class="navigation navigation-next " aria-label="Next page: 中断处理">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"system call!","level":"1.8.2","depth":2,"next":{"title":"中断处理","level":"1.8.3","depth":2,"path":"lab5/3_trap.md","ref":"lab5/3_trap.md","articles":[]},"previous":{"title":"用户程序","level":"1.8.1","depth":2,"path":"lab5/1_user.md","ref":"lab5/1_user.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{"maxIndexSize":1000000},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"lab5/2_syscall.md","mtime":"2021-03-12T01:33:10.453Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-03-13T13:17:09.043Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+
