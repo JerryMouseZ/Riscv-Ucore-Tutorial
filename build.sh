@@ -11,5 +11,5 @@ git checkout gh-pages
 cp -r ./_book/* ./
 git add -A
 git commit -m "update"
-git push origin gh-pages
+git push --force origin gh-pages
 git checkout master
