@@ -40,46 +40,11 @@
 
 ```c
 // kern/trap/trap.h
-#ifndef __KERN_TRAP_TRAP_H__
-#define __KERN_TRAP_TRAP_H__
-
-#include <defs.h>
-
 struct pushregs {
-    uintptr_t zero;  // Hard-wired zero
-    uintptr_t ra;    // Return address
-    uintptr_t sp;    // Stack pointer
-    uintptr_t gp;    // Global pointer
-    uintptr_t tp;    // Thread pointer
-    uintptr_t t0;    // Temporary
-    uintptr_t t1;    // Temporary
-    uintptr_t t2;    // Temporary
-    uintptr_t s0;    // Saved register/frame pointer
-    uintptr_t s1;    // Saved register
-    uintptr_t a0;    // Function argument/return value
-    uintptr_t a1;    // Function argument/return value
-    uintptr_t a2;    // Function argument
-    uintptr_t a3;    // Function argument
-    uintptr_t a4;    // Function argument
-    uintptr_t a5;    // Function argument
-    uintptr_t a6;    // Function argument
-    uintptr_t a7;    // Function argument
-    uintptr_t s2;    // Saved register
-    uintptr_t s3;    // Saved register
-    uintptr_t s4;    // Saved register
-    uintptr_t s5;    // Saved register
-    uintptr_t s6;    // Saved register
-    uintptr_t s7;    // Saved register
-    uintptr_t s8;    // Saved register
-    uintptr_t s9;    // Saved register
-    uintptr_t s10;   // Saved register
-    uintptr_t s11;   // Saved register
-    uintptr_t t3;    // Temporary
-    uintptr_t t4;    // Temporary
-    uintptr_t t5;    // Temporary
-    uintptr_t t6;    // Temporary
+    //定义需要保存的通用寄存器
 };
 
+// 栈帧
 struct trapframe {
     struct pushregs gpr;
     uintptr_t status; //sstatus
@@ -110,37 +75,7 @@ C语言里面的结构体，是若干个变量在内存里直线排列。也就�
     #依次保存32个通用寄存器。但栈顶指针需要特殊处理。
     #因为我们想在trapFrame里保存分配36个REGBYTES之前的sp
     #也就是保存之前写到sscratch里的sp的值
-    STORE x0, 0*REGBYTES(sp)
-    STORE x1, 1*REGBYTES(sp)
-    STORE x3, 3*REGBYTES(sp)
-    STORE x4, 4*REGBYTES(sp)
-    STORE x5, 5*REGBYTES(sp)
-    STORE x6, 6*REGBYTES(sp)
-    STORE x7, 7*REGBYTES(sp)
-    STORE x8, 8*REGBYTES(sp)
-    STORE x9, 9*REGBYTES(sp)
-    STORE x10, 10*REGBYTES(sp)
-    STORE x11, 11*REGBYTES(sp)
-    STORE x12, 12*REGBYTES(sp)
-    STORE x13, 13*REGBYTES(sp)
-    STORE x14, 14*REGBYTES(sp)
-    STORE x15, 15*REGBYTES(sp)
-    STORE x16, 16*REGBYTES(sp)
-    STORE x17, 17*REGBYTES(sp)
-    STORE x18, 18*REGBYTES(sp)
-    STORE x19, 19*REGBYTES(sp)
-    STORE x20, 20*REGBYTES(sp)
-    STORE x21, 21*REGBYTES(sp)
-    STORE x22, 22*REGBYTES(sp)
-    STORE x23, 23*REGBYTES(sp)
-    STORE x24, 24*REGBYTES(sp)
-    STORE x25, 25*REGBYTES(sp)
-    STORE x26, 26*REGBYTES(sp)
-    STORE x27, 27*REGBYTES(sp)
-    STORE x28, 28*REGBYTES(sp)
-    STORE x29, 29*REGBYTES(sp)
-    STORE x30, 30*REGBYTES(sp)
-    STORE x31, 31*REGBYTES(sp)
+    #保存需要的寄存器
 	# RISCV不能直接从CSR写到内存, 需要csrr把CSR读取到通用寄存器，再从通用寄存器STORE到内存
     csrrw s0, sscratch, x0
     csrr s1, sstatus
