@@ -6,6 +6,8 @@
 #########################################################################
 #!/bin/zsh
 
+git add -A
+git commit -m "update"
 gitbook build
 git checkout gh-pages
 cp -r ./_book/* ./
