@@ -8,6 +8,7 @@
 
 git add -A
 git commit -m "update"
+git pull origin master
 gitbook build
 git checkout gh-pages
 cp -r ./_book/* ./
